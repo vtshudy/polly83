@@ -1,0 +1,30 @@
+/* DCC v29 — live map visibility, park tabs, castle framing, itinerary editor alignment */
+.mapview.liveAllMode{display:grid!important;grid-template-rows:auto auto minmax(270px,1fr) minmax(180px,33dvh)!important;height:100dvh;overflow:hidden}
+.mapview.liveAllMode .tabs{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;padding:7px;background:#fff;border-bottom:1px solid var(--line);z-index:5}
+.mapview.liveAllMode .mapstage{display:block!important;position:relative!important;min-height:270px!important;overflow:hidden;background:#d9e6f2}
+.mapview.liveAllMode #map{display:block!important;position:absolute!important;inset:0!important;min-height:270px}
+.mapview.liveAllMode .drawer{min-height:0;overflow:auto}
+.tabs .allParksTab{background:#e8f2ff;color:#0b63ce}
+.tabs .allParksTab.on{background:#0b63ce;color:#fff}
+
+/* Show a little more of Cinderella Castle on iPhone instead of cropping the top. */
+@media(max-width:600px){
+ .hero img{object-fit:contain!important;object-position:center top!important;background:#8fc9f4}
+ .hero{background:#8fc9f4}
+}
+
+/* Keep the edit-time column and FLEX control aligned without overlapping the plan text. */
+.itin.itinEditing{grid-template-columns:112px minmax(0,1fr)!important;gap:10px!important;align-items:start!important}
+.itinEditing>.itime{width:112px!important;min-width:0!important;max-width:112px!important;padding:7px 6px!important;overflow:hidden}
+.itinEditing>.itime label{display:block;width:100%;min-width:0}
+.itinEditing .itinTimeInput{display:block;width:100%!important;min-width:0!important;max-width:100%!important;padding:7px 4px!important}
+.itinEditing .itinFlexBtn{display:block;width:100%;margin:0;box-sizing:border-box}
+.itinEditing>div:nth-child(2){min-width:0;padding-top:2px}
+@media(max-width:430px){
+ .itin.itinEditing{grid-template-columns:104px minmax(0,1fr)!important;gap:8px!important}
+ .itinEditing>.itime{width:104px!important;max-width:104px!important}
+ .itinEditing .itinTimeInput{font-size:10px!important;padding-left:3px!important;padding-right:3px!important}
+ .mapview.liveAllMode{grid-template-rows:auto auto minmax(245px,1fr) minmax(180px,34dvh)!important}
+ .mapview.liveAllMode .mapstage,.mapview.liveAllMode #map{min-height:245px!important}
+ .mapview.liveAllMode .tabs button{font-size:7px;padding:8px 1px}
+}
