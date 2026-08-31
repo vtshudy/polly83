@@ -40,3 +40,6 @@ dayPanel=function(day){
 
 dccApplySavedItineraryEdits();
 try{renderDays();renderToday()}catch(e){}
+
+/* Load v27 live all-parks map after all earlier map handlers are installed. */
+(()=>{let l=document.createElement('link');l.rel='stylesheet';l.href='/disney-command-center/live27.css?v=27';document.head.append(l);let s=document.createElement('script');s.src='/disney-command-center/app9.js?v=27';s.defer=false;document.body.append(s)})();
