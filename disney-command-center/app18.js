@@ -2,7 +2,8 @@
 (()=>{
  const refs=[
   {key:'transport',icon:'🚌',name:'Disney Transportation Map',sub:'Buses • boats • monorail • Skyliner • park-to-park',url:'https://magicguides.com/disney-world-transportation-map'},
-  {key:'ep',icon:'🌐',name:'EPCOT / Resort Overview Reference',sub:'Property-wide overview supplied for EPCOT planning',url:'https://magicguides.com/wp-content/uploads/2019/01/Disney-World-Resort-Map-1.pdf'},
+  {key:'ep',icon:'🌐',name:'EPCOT Guide Map',sub:'Current EPCOT attraction, dining and services reference',url:'https://magicguides.com/wp-content/uploads/2026/02/WDW-Map-EC-2025-11-00.pdf'},
+  {key:'overview',icon:'🌐',name:'Walt Disney World Resort Overview',sub:'Property-wide resort / park overview',url:'https://magicguides.com/wp-content/uploads/2019/01/Disney-World-Resort-Map-1.pdf'},
   {key:'ds',icon:'🛍️',name:'Disney Springs Guide Map',sub:'Dining • shopping • bus and boat areas',url:'https://magicguides.com/wp-content/uploads/2025/01/WDW-Map-DS-2024-12-21.pdf'},
   {key:'mk',icon:'🏰',name:'Magic Kingdom Guide Map',sub:'2026 park reference',url:'https://magicguides.com/wp-content/uploads/2026/02/WDW-Map-MK-2026-01-05.pdf'},
   {key:'hs',icon:'🎬',name:'Hollywood Studios Guide Map',sub:'2025 park reference',url:'https://magicguides.com/wp-content/uploads/2025/09/WDW-Map-DHS-2025-09-25.pdf'},
@@ -13,7 +14,7 @@
   {key:'wdwprep',icon:'🗺️',name:'WDW Prep School Map Library',sub:'Additional park and resort map cross-checks',url:'https://wdwprepschool.com/disney-world-maps/'}
  ];
  window.dccGuideMaps=refs;
- const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
 
  function ensureFooter(){
   let footer=document.getElementById('dccBottomStatus');
