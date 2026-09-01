@@ -1,0 +1,22 @@
+/* DCC v35 — Disney-themed family login gate */
+body.authLocked{overflow:hidden!important;background:#071a35}
+body.authLocked>.app,body.authLocked>.nav,body.authLocked>.panel,body.authLocked>.mapview{display:none!important}
+.dccAuth{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:22px;background:linear-gradient(180deg,rgba(4,18,43,.24),rgba(4,18,43,.84)),url('https://assets.simpleviewinc.com/simpleview/image/upload/c_limit%2Ch_1200%2Cq_75%2Cw_1200/v1/clients/orlandofl-redesign/4899_Disney2023LandingPage_2024_40268216-ecff-4596-b011-a889255e75d2.jpg') center 22%/cover no-repeat;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.dccAuth[hidden]{display:none!important}
+.dccAuthCard{width:min(100%,430px);border:1px solid rgba(255,255,255,.36);border-radius:30px;padding:25px 22px 22px;background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(240,247,255,.95));box-shadow:0 24px 70px rgba(0,18,55,.38);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.dccAuthMark{width:62px;height:62px;margin:0 auto 13px;border-radius:22px;display:grid;place-items:center;font-size:31px;background:linear-gradient(145deg,#0b63ce,#7c52d8);box-shadow:0 11px 25px rgba(11,99,206,.25)}
+.dccAuthEyebrow{text-align:center;color:#6d82a0;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+.dccAuthCard h1{margin:7px 0 4px;text-align:center;color:#143c68;font-size:27px;line-height:1.05;letter-spacing:-.035em}
+.dccAuthSub{text-align:center;margin:0 0 19px;color:#6c8098;font-size:14px;line-height:1.45;font-weight:650}
+.dccAuthField{display:block;margin-top:12px;color:#365577;font-size:12px;font-weight:850}
+.dccAuthField span{display:block;margin:0 0 6px 3px}
+.dccAuthField input{box-sizing:border-box;width:100%;height:52px;border:1px solid #c9d9ec;border-radius:15px;background:#fff;color:#173a5b;padding:0 14px;font-size:16px;font-weight:700;outline:none;box-shadow:inset 0 1px 2px rgba(23,58,91,.03)}
+.dccAuthField input:focus{border-color:#4b91e6;box-shadow:0 0 0 4px rgba(11,99,206,.1)}
+.dccPasswordWrap{position:relative}.dccPasswordWrap input{padding-right:62px}.dccPasswordToggle{position:absolute;right:7px;top:7px;height:38px;border:0;border-radius:10px;background:#eef5ff;color:#245d96;font-size:11px;font-weight:900;padding:0 11px}
+.dccRemember{display:flex;align-items:center;gap:9px;margin:13px 2px;color:#58718c;font-size:12px;font-weight:750}.dccRemember input{width:18px;height:18px;accent-color:#0b63ce}
+.dccLoginBtn{width:100%;height:52px;border:0;border-radius:15px;background:linear-gradient(135deg,#0b63ce,#347fd8 60%,#7b55d7);color:white;font-size:15px;font-weight:950;letter-spacing:.01em;box-shadow:0 10px 23px rgba(11,99,206,.24)}
+.dccLoginBtn:active{transform:translateY(1px)}
+.dccAuthError{min-height:20px;margin:9px 3px 0;text-align:center;color:#bd3c4d;font-size:12px;font-weight:800}
+.dccAuthFoot{margin-top:12px;text-align:center;color:#8799ac;font-size:10px;line-height:1.4}
+.dccLogoutBtn{border:1px solid rgba(255,255,255,.4)!important;background:rgba(5,37,72,.28)!important;color:#fff!important;border-radius:999px!important;padding:7px 10px!important;font-size:10px!important;font-weight:900!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media(max-width:430px){.dccAuth{padding:17px}.dccAuthCard{border-radius:25px;padding:22px 17px 18px}.dccAuthMark{width:56px;height:56px;font-size:28px}.dccAuthCard h1{font-size:24px}.dccAuthSub{font-size:13px}.dccAuthField input,.dccLoginBtn{height:50px}}
