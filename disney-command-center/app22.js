@@ -2,7 +2,7 @@
 (()=>{
  const SEEN_KEY='dcc-alert-seen-v40';
  let alerts=[],updated='',pollTimer=null;
- const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
  function seen(){try{return new Set(JSON.parse(localStorage.getItem(SEEN_KEY)||'[]'))}catch(e){return new Set()}}
  function saveSeen(set){try{localStorage.setItem(SEEN_KEY,JSON.stringify([...set].slice(-250)))}catch(e){}}
  function unread(){let s=seen();return alerts.filter(a=>!s.has(a.id))}
@@ -31,8 +31,9 @@
   html+='<div class="dccAlertFoot">Updated '+esc(updated?fmtTime(updated):'just now')+' • automatically checks about every 5 minutes while the app is open.</div>';
   pb.innerHTML=html;$('panel').classList.add('open');
  }
+ function resetRecoveredLiveSeen(next){let s=seen(),active=new Set(next.filter(a=>a.verified).map(a=>a.id)),changed=false;for(const id of [...s]){if(String(id).startsWith('live-')&&!active.has(id)){s.delete(id);changed=true}}if(changed)saveSeen(s)}
  async function load(){
-  ensureUI();try{let r=await fetch('/api/disney-alerts?ts='+Math.floor(Date.now()/240000),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);let j=await r.json();if(j&&Array.isArray(j.alerts)){alerts=j.alerts;updated=j.updated||new Date().toISOString();renderSignal()}}catch(e){/* keep last good state silently */}
+  ensureUI();try{let r=await fetch('/api/disney-alerts?ts='+Math.floor(Date.now()/240000),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);let j=await r.json();if(j&&Array.isArray(j.alerts)){resetRecoveredLiveSeen(j.alerts);alerts=j.alerts;updated=j.updated||new Date().toISOString();renderSignal()}}catch(e){/* keep last good state silently */}
  }
  window.dccOpenAlerts=openAlerts;
  ensureUI();load();pollTimer=setInterval(load,300000);
