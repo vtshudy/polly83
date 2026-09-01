@@ -2,7 +2,7 @@
 (()=>{
  const SEEN_KEY='dcc-alert-seen-v40';
  let alerts=[],updated='',pollTimer=null;
- const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+ const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function seen(){try{return new Set(JSON.parse(localStorage.getItem(SEEN_KEY)||'[]'))}catch(e){return new Set()}}
  function saveSeen(set){try{localStorage.setItem(SEEN_KEY,JSON.stringify([...set].slice(-250)))}catch(e){}}
  function unread(){let s=seen();return alerts.filter(a=>!s.has(a.id))}
