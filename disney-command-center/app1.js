@@ -1,3 +1,6 @@
+/* DCC v35 auth bootstrap */
+document.body.classList.add('authLocked');
+(()=>{let l=document.createElement('link');l.rel='stylesheet';l.href='/disney-command-center/login35.css?v=35';document.head.append(l);let s=document.createElement('script');s.src='/disney-command-center/app17.js?v=35';s.async=false;document.body.append(s)})();
 const $=x=>document.getElementById(x),P={mk:{n:'Magic Kingdom',id:'75ea578a-adc8-4116-a54d-dccb60765ef9',c:[28.416,-81.5812],z:16},ep:{n:'EPCOT',id:'47f90d2c-e191-4239-a466-5892ef59a88b',c:[28.3747,-81.5494],z:15},hs:{n:'Hollywood Studios',id:'288747d1-8b4f-4a64-867e-ea7c9b27bad8',c:[28.3575,-81.5583],z:16},ak:{n:'Animal Kingdom',id:'1c84a229-8862-4648-9c71-378ddd2c7693',c:[28.3553,-81.5901],z:15}};
 const itinerary={
 '2026-11-27':{title:'Travel Day',sub:'Philadelphia → Orlando → Wyndham Bonnet Creek',items:[['14:27','✈️','AA 1697 departs PHL','Newest airline baseline'],['17:20','🛬','Arrive MCO','Baggage + Orlando Magical Rides'],['','🏨','Wyndham Grand Orlando Resort Bonnet Creek','Check in, easy dinner, rest']]},
