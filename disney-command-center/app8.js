@@ -1,5 +1,5 @@
-/* DCC v26 — edit itinerary times / delete plans with device persistence */
-const dccEditStorageKey='dcc-itinerary-edits-v1';
+/* DCC v43 — edit itinerary times / delete plans with baseline-aware device persistence */
+const dccEditStorageKey='dcc-itinerary-edits-'+(typeof DCC_ITINERARY_BASELINE!=='undefined'?DCC_ITINERARY_BASELINE:'v1');
 const dccOriginalItems={};
 for(const [day,v] of Object.entries(itinerary))dccOriginalItems[day]=v.items.map(x=>[...x]);
 function dccReadItineraryEdits(){try{return JSON.parse(localStorage.getItem(dccEditStorageKey)||'{}')||{}}catch(e){return{}}}
