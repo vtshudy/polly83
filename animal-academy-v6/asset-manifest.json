@@ -1,0 +1,69 @@
+{
+  "project": "Creature Quest Academy v6",
+  "world": "amazon_rainforest",
+  "status": "production",
+  "assets": {
+    "backgrounds": [
+      "rainforest_sky.webp",
+      "rainforest_far_canopy.webp",
+      "rainforest_mid_canopy.webp",
+      "rainforest_tree_columns.webp",
+      "rainforest_foreground_leaves.webp",
+      "rainforest_mist.webp"
+    ],
+    "terrain": [
+      "grass_edge_straight.webp",
+      "grass_edge_left.webp",
+      "grass_edge_right.webp",
+      "dirt_platform_small.webp",
+      "dirt_platform_medium.webp",
+      "dirt_platform_large.webp",
+      "cliff_wall.webp",
+      "roots_overlay.webp",
+      "moss_overlay.webp",
+      "stone_cluster.webp",
+      "log_bridge.webp",
+      "vine_wall.webp",
+      "river_surface.webp",
+      "waterfall.webp"
+    ],
+    "props": [
+      "wildlab_base.webp",
+      "field_scanner.webp",
+      "creature_data_pod.webp",
+      "checkpoint.webp",
+      "rescue_marker.webp",
+      "power_disc.webp",
+      "canopy_branch.webp",
+      "hanging_vine.webp"
+    ],
+    "player": [
+      "player_idle.webp",
+      "player_run.webp",
+      "player_jump.webp",
+      "player_fall.webp",
+      "player_land.webp",
+      "player_scan.webp",
+      "player_transform.webp",
+      "player_sloth_power.webp"
+    ],
+    "animals": [
+      "frog_idle.webp",
+      "toucan_idle.webp",
+      "sloth_adult_idle.webp",
+      "sloth_baby_idle.webp",
+      "sloth_reunion.webp"
+    ],
+    "effects": [
+      "scan_beam.webp",
+      "data_sparkles.webp",
+      "discovery_burst.webp",
+      "transform_ring.webp",
+      "leaf_particles.webp",
+      "dust_puff.webp",
+      "water_splash.webp",
+      "landing_puff.webp",
+      "rescue_celebration.webp"
+    ]
+  }
+}
