@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#071b24">
 <title>Creature Quest Academy — Amazon Rescue</title>
@@ -81,15 +81,124 @@ canvas{
 #parent{display:none}#parent.show{display:block}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.stat{background:#ffffff0c;border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:24px}.skill{padding:9px 0;border-bottom:1px solid #ffffff14}.line{display:flex;justify-content:space-between;gap:8px}.meter{height:6px;background:#ffffff12;border-radius:999px;overflow:hidden;margin-top:5px}.meter span{display:block;height:100%;background:linear-gradient(90deg,#75eab3,#70d8ff)}
 @media(max-width:700px){.controls{grid-template-columns:1fr}.pad:last-child{justify-content:space-between}.choices{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.hud{max-width:58%;top:8px;right:8px;padding:6px;gap:5px}.hud .pill,.hud .btn{padding:7px 8px;font-size:13px}.mission{top:8px;left:8px;padding-right:58%}.mission>div{padding:8px 9px}.mission>div:last-child{display:none}}
 @media(prefers-reduced-motion:reduce){.game.shake,#powerFlash.fire,.floatText,.hud .pill.bump{animation:none!important}}
+
+/* ===== v5 high-detail mobile game layer ===== */
+html,body{overscroll-behavior:none}
+.game{
+  min-height:clamp(360px,58svh,720px);
+  isolation:isolate;
+}
+canvas{height:100%;min-height:clamp(360px,58svh,720px)}
+.environmentLayer,.creatureLayer,.actorLayer{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:24px}
+.environmentLayer{z-index:1}
+.creatureLayer{z-index:4}
+.actorLayer{z-index:5}
+.game::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:24px;
+  background:
+    radial-gradient(ellipse at 10% 95%,rgba(28,87,43,.48) 0 7%,transparent 8%),
+    radial-gradient(ellipse at 28% 93%,rgba(54,115,53,.30) 0 6%,transparent 7%),
+    radial-gradient(ellipse at 72% 96%,rgba(32,90,47,.36) 0 8%,transparent 9%),
+    linear-gradient(180deg,transparent 66%,rgba(75,54,30,.18) 67% 71%,rgba(23,91,50,.15) 72%);
+  mix-blend-mode:multiply
+}
+.decor{position:absolute;opacity:.9;filter:drop-shadow(0 5px 5px rgba(0,0,0,.28))}
+.tuft{width:44px;height:28px;background:
+  radial-gradient(ellipse at 15% 100%,#3b8d4a 0 44%,transparent 46%),
+  radial-gradient(ellipse at 45% 100%,#54a65a 0 48%,transparent 50%),
+  radial-gradient(ellipse at 78% 100%,#2c7840 0 44%,transparent 46%);
+  transform-origin:bottom center
+}
+.rock{width:52px;height:31px;border-radius:55% 48% 42% 40%;background:
+  linear-gradient(145deg,#8c907c,#505e53 65%,#374840);box-shadow:inset 9px 8px 12px #ffffff24}
+.d1{left:7%;bottom:7%}.d2{left:18%;bottom:4%;transform:scale(.75)}.d3{left:40%;bottom:7%}.d4{left:64%;bottom:5%;transform:scale(.8)}
+.rk1{left:31%;bottom:5%}.rk2{left:82%;bottom:7%;transform:scale(.7)}
+
+.playerAnchor{position:absolute;width:72px;height:104px;transform-origin:top left;will-change:left,top,transform;pointer-events:none}
+.playerAvatar{position:relative;width:72px;height:104px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.38));animation:avatarIdle 1.15s ease-in-out infinite}
+.playerAvatar.moving{animation-duration:.34s}.playerAvatar.airborne{animation:avatarAir .55s ease-in-out infinite alternate}
+@keyframes avatarIdle{50%{transform:translateY(-4px)}}
+@keyframes avatarAir{to{transform:rotate(-2deg) translateY(-3px)}}
+.avatarGlow{position:absolute;inset:2px 4px 0;border-radius:36px;box-shadow:0 0 0 2px var(--suit-color,#78d8ff),0 0 16px var(--suit-color,#78d8ff),0 0 34px color-mix(in srgb,var(--suit-color,#78d8ff) 55%,transparent);opacity:.38;transition:.25s}
+.playerAvatar.suitOn .avatarGlow{opacity:1;animation:avatarGlowPulse .8s ease-in-out infinite}
+@keyframes avatarGlowPulse{50%{filter:brightness(1.5);transform:scale(1.06)}}
+.power-cheetah{--suit-color:#68ff44}.power-falcon{--suit-color:#39c9ff}.power-elephant{--suit-color:#8e59ff}.power-sloth{--suit-color:#ffd85e}
+.avatarHead{position:absolute;left:20px;top:4px;width:32px;height:32px;border-radius:50%;background:linear-gradient(145deg,#e3ad82,#bd7957);border:2px solid #ffe0bd;box-shadow:inset 0 -5px #9b5d48}
+.avatarHair{position:absolute;left:18px;top:1px;width:36px;height:18px;border-radius:22px 22px 10px 10px;background:#2e211d}
+.avatarVisor{position:absolute;left:20px;top:15px;width:32px;height:10px;border-radius:8px;background:linear-gradient(90deg,#4fffd0,#79dfff);box-shadow:0 0 10px #6cefdc}
+.avatarBody{position:absolute;left:14px;top:34px;width:44px;height:43px;border-radius:14px 14px 11px 11px;background:linear-gradient(145deg,#284e63,#132d3b);border:2px solid #89d8e9;box-shadow:inset 0 0 0 4px #ffffff0c}
+.playerAvatar.suitOn .avatarBody{background:linear-gradient(145deg,color-mix(in srgb,var(--suit-color) 70%,#18343a),#12232d);border-color:var(--suit-color);box-shadow:0 0 18px color-mix(in srgb,var(--suit-color) 50%,transparent),inset 0 0 0 4px #ffffff12}
+.avatarChest{position:absolute;left:30px;top:43px;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle,#fff 0 18%,var(--suit-color,#64e5ff) 22% 58%,#071a22 62%);box-shadow:0 0 13px var(--suit-color,#64e5ff)}
+.avatarArm,.avatarLeg{position:absolute;background:#163440;border:2px solid #77b8c7;border-radius:10px}
+.avatarArm{width:13px;height:38px;top:39px}.avatarArm.a1{left:5px;transform:rotate(8deg)}.avatarArm.a2{right:5px;transform:rotate(-8deg)}
+.avatarLeg{width:15px;height:34px;top:72px}.avatarLeg.l1{left:18px}.avatarLeg.l2{right:18px}
+.playerAvatar.suitOn .avatarArm,.playerAvatar.suitOn .avatarLeg{border-color:var(--suit-color)}
+.transforming .playerAvatar{animation:transformScale .78s cubic-bezier(.2,.8,.2,1)}
+@keyframes transformScale{0%{transform:scale(1)}34%{transform:scale(1.2) rotate(-2deg)}65%{transform:scale(1.2) rotate(2deg)}100%{transform:scale(1)}}
+
+.creatureAnchor{position:absolute;width:128px;height:130px;transform-origin:bottom center;will-change:left,top,transform}
+.creatureCard{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:128px;min-height:118px;border-radius:22px;padding:9px 8px 8px;text-align:center;
+  background:linear-gradient(180deg,rgba(7,36,33,.92),rgba(7,25,30,.84));
+  border:1px solid rgba(157,255,196,.28);box-shadow:0 12px 26px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.08);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);animation:creatureIdle 1.9s ease-in-out infinite}
+@keyframes creatureIdle{50%{transform:translateX(-50%) translateY(-7px)}}
+.creatureAnchor.scanned .creatureCard{opacity:.46;filter:saturate(.55)}
+.speciesBadge{display:inline-block;padding:4px 8px;border-radius:999px;background:#9effbd17;border:1px solid #a8ffc72b;color:#dfffea;font-size:10px;font-weight:1000;letter-spacing:.35px;text-transform:uppercase}
+.creatureArt{font-size:48px;line-height:1;margin:5px 0;filter:drop-shadow(0 6px 8px #0007)}
+.powerDisc{margin:-1px auto 0;width:24px;height:24px;border-radius:50%;background:conic-gradient(#9effc0,#57d4ff,#ffe978,#9effc0);border:3px solid #dfffee;box-shadow:0 0 13px #67ffc7,0 0 0 4px #071b1e;position:relative}
+.powerDisc::after{content:"";position:absolute;inset:6px;border-radius:50%;background:#0b3131}
+.creatureName{margin-top:7px;font-size:11px;font-weight:950;color:#f4fff9}
+
+#screenFlash{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0;background:
+  radial-gradient(circle at center,#fff 0 6%,#d8ffe7 9%,rgba(108,255,194,.64) 22%,rgba(72,190,255,.25) 45%,transparent 70%)}
+#screenFlash.fire{animation:screenFlash .82s ease-out}
+@keyframes screenFlash{0%{opacity:0}12%{opacity:1}35%{opacity:.72}100%{opacity:0}}
+
+.mobileControls{display:none}
+@media (hover:none),(pointer:coarse){
+  body{padding-bottom:150px}
+  .controls{display:none!important}
+  .mobileControls{display:block;position:fixed;inset:0;z-index:1500;pointer-events:none}
+  .dpad{position:absolute;left:max(12px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));width:176px;height:176px;pointer-events:none}
+  .dpadBtn,.mobileAction{border:1px solid rgba(255,255,255,.28);color:white;background:rgba(7,25,31,.64);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 28px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12);touch-action:none;-webkit-user-select:none;user-select:none}
+  .dpadBtn{position:absolute;width:64px;height:64px;border-radius:21px;font-size:27px;pointer-events:auto}
+  .dpadBtn.up{left:56px;top:0}.dpadBtn.down{left:56px;bottom:0}.dpadBtn.left{left:0;top:56px}.dpadBtn.right{right:0;top:56px}
+  .dpadBtn:active,.mobileAction:active{transform:scale(.94);background:rgba(103,234,166,.34)}
+  .mobileAction{position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));width:126px;height:126px;border-radius:50%;pointer-events:auto;
+    background:radial-gradient(circle at 35% 25%,#fff5a8,#ffcc52 48%,#f19a31 100%);color:#4b2d00;border:5px solid rgba(255,255,255,.38);font-size:15px;font-weight:1000;line-height:1.15}
+  .mobileAction .bolt{display:block;font-size:38px}
+  .game{min-height:clamp(390px,62svh,760px)}
+  canvas{min-height:clamp(390px,62svh,760px)}
+}
+@media (orientation:landscape) and (hover:none),(orientation:landscape) and (pointer:coarse){
+  body{padding-bottom:0}
+  .game{min-height:76svh}
+  canvas{min-height:76svh}
+}
+
 </style>
 </head>
 <body>
 <div id="app">
 <div class="top">
- <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">POLISHED BUILD v4.2</span></div>
+ <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">INDIE MOBILE BUILD v5.0</span></div>
 </div>
 <div id="game" class="game active">
  <canvas id="c" width="1280" height="720"></canvas>
+ <div class="environmentLayer" aria-hidden="true">
+   <div class="decor tuft d1"></div><div class="decor tuft d2"></div><div class="decor tuft d3"></div><div class="decor tuft d4"></div>
+   <div class="decor rock rk1"></div><div class="decor rock rk2"></div>
+ </div>
+ <div id="creatureLayer" class="creatureLayer" aria-hidden="true"></div>
+ <div class="actorLayer" aria-hidden="true">
+   <div id="playerAnchor" class="playerAnchor">
+     <div id="playerAvatar" class="playerAvatar power-sloth">
+       <div class="avatarGlow"></div><div class="avatarHead"></div><div class="avatarHair"></div><div class="avatarVisor"></div>
+       <div class="avatarBody"></div><div class="avatarChest"></div>
+       <div class="avatarArm a1"></div><div class="avatarArm a2"></div><div class="avatarLeg l1"></div><div class="avatarLeg l2"></div>
+     </div>
+   </div>
+ </div>
  <div class="hud">
    <div class="pill" id="livesPill">❤️ <b>3</b></div>
    <div class="pill" id="xpPill">⭐ <span id="xp">0</span> XP</div>
@@ -102,9 +211,19 @@ canvas{
  <div id="overlay" class="overlay"><div id="dialog" class="dialog"></div></div>
  <div id="toast" class="toast"></div>
 </div>
+<div id="screenFlash"></div>
 <div class="controls">
  <div class="pad"><button id="left" class="ctrl go">◀ LEFT</button><button id="right" class="ctrl go">RIGHT ▶</button></div>
  <div class="pad"><button id="jump" class="ctrl">⬆ JUMP</button><button id="interact" class="ctrl interact">✋ INTERACT</button><button id="power" class="ctrl power" disabled>🦥 SUIT</button></div>
+</div>
+<div class="mobileControls" id="mobileControls" aria-label="Mobile game controls">
+ <div class="dpad">
+  <button id="mUp" class="dpadBtn up" aria-label="Jump">⬆️</button>
+  <button id="mLeft" class="dpadBtn left" aria-label="Move left">⬅️</button>
+  <button id="mRight" class="dpadBtn right" aria-label="Move right">➡️</button>
+  <button id="mDown" class="dpadBtn down" aria-label="Crouch">⬇️</button>
+ </div>
+ <button id="mAction" class="mobileAction" aria-label="Action or Creature Power"><span class="bolt">⚡</span>ACTION<br>POWER</button>
 </div>
 <div class="panel"><b>Amazon Rainforest • Lost Baby Sloth</b><div id="obj">Objective: reach the field scanner.</div><div class="progress"><span id="prog"></span></div></div>
 <div id="parent" class="panel"><div class="line"><div><b>Parent Learning Dashboard</b><div>First attempts only. Retries do not inflate the score.</div></div><button id="closeParent" class="btn">Close</button></div><div class="stats"><div class="stat"><b id="acc">—</b>Accuracy</div><div class="stat"><b id="att">0</b>Questions</div><div class="stat"><b id="cor">0</b>Correct</div><div class="stat"><b id="resc">0</b>Rescues</div></div><div id="focus" class="fact"></div><div id="skills"></div></div>
@@ -115,9 +234,31 @@ var C=document.getElementById("c"),X=C.getContext("2d"),W=1280,H=720,G=598,L=330
 function $(i){return document.getElementById(i)}
 var S={xp:0,paws:0,rescues:0,history:[]};try{S=Object.assign(S,JSON.parse(localStorage.getItem("cqv41")||"{}"))}catch(e){}
 function save(){try{localStorage.setItem("cqv41",JSON.stringify(S))}catch(e){}}
-var P={x:170,y:G-76,w:46,h:76,vx:0,vy:0,speed:275,jump:610,on:false,face:1,suit:false,anim:0},cam=0,last=performance.now(),K={l:false,r:false},step=0,pods=0,rescued=false,glow=0;
+var P={x:170,y:G-76,w:46,h:76,vx:0,vy:0,speed:275,jump:610,on:false,face:1,suit:false,anim:0,crouch:false},cam=0,last=performance.now(),K={l:false,r:false},step=0,pods=0,rescued=false,glow=0,activePower="sloth",creatureEls={};
 var FX=[],FLOATS=[],lastImpact=0,hudPrev={xp:S.xp||0,paws:S.paws||0,data:0};
 var O=[{id:"scan",x:430,t:"scan",name:"Field Scanner",done:false},{id:"frog",x:860,t:"animal",emo:"🐸",name:"Poison Dart Frog",done:false},{id:"toucan",x:1320,t:"animal",emo:"🐦",name:"Toucan",done:false},{id:"sloth",x:1760,t:"animal",emo:"🦥",name:"Adult Sloth",done:false},{id:"gate",x:2220,t:"gate",name:"Canopy Vines",done:false},{id:"baby",x:2920,t:"baby",emo:"🦥",name:"Baby Sloth",done:false}];
+
+function initCSSActors(){
+ var layer=$("creatureLayer");layer.innerHTML="";
+ O.filter(function(o){return o.t==="animal"||o.t==="baby"}).forEach(function(o){
+   var a=document.createElement("div");a.className="creatureAnchor";a.dataset.id=o.id;
+   var badge=o.id==="frog"?"AMPHIBIAN":o.id==="toucan"?"RAINFOREST BIRD":o.id==="sloth"?"CANOPY MAMMAL":"RESCUE TARGET";
+   a.innerHTML='<div class="creatureCard"><div class="speciesBadge">'+badge+'</div><div class="creatureArt">'+o.emo+'</div><div class="powerDisc"></div><div class="creatureName">'+o.name+'</div></div>';
+   layer.appendChild(a);creatureEls[o.id]=a
+ })
+}
+function creatureWorldY(o){if(o.id==="baby")return 365;if(o.id==="frog")return G-96;if(o.id==="toucan")return G-118;if(o.id==="sloth")return G-110;return G-100}
+function updateCSSActors(){
+ var rect=C.getBoundingClientRect(),sx=rect.width/W,sy=rect.height/H,sc=Math.max(.58,Math.min(1.1,(sx+sy)/2)),pa=$("playerAnchor"),av=$("playerAvatar");
+ pa.style.left=((P.x-cam)*sx)+"px";pa.style.top=(P.y*sy)+"px";pa.style.transform="scale("+sc+")";
+ av.classList.toggle("moving",Math.abs(P.vx)>8&&P.on);av.classList.toggle("airborne",!P.on);av.classList.toggle("suitOn",P.suit);av.classList.toggle("crouching",P.crouch);
+ av.classList.remove("power-cheetah","power-falcon","power-elephant","power-sloth");av.classList.add("power-"+activePower);
+ O.forEach(function(o){var e=creatureEls[o.id];if(!e)return;var cx=(o.x-cam)*sx,cy=creatureWorldY(o)*sy;e.style.left=cx+"px";e.style.top=cy+"px";e.style.transform="translate(-50%,-100%) scale("+sc+")";e.style.display=(cx<-160||cx>rect.width+160)?"none":"block";e.classList.toggle("scanned",!!o.done)})
+}
+function transformSequence(){
+ var f=$("screenFlash"),pa=$("playerAnchor");f.classList.remove("fire");void f.offsetWidth;f.classList.add("fire");pa.classList.remove("transforming");void pa.offsetWidth;pa.classList.add("transforming");setTimeout(function(){pa.classList.remove("transforming")},820)
+}
+
 var PL=[{x:0,y:G,w:L,h:130},{x:720,y:515,w:150,h:22},{x:980,y:470,w:170,h:22},{x:1240,y:520,w:170,h:22},{x:1570,y:480,w:170,h:22},{x:1840,y:430,w:160,h:22},{x:2080,y:485,w:120,h:22},{x:2320,y:460,w:150,h:22},{x:2540,y:410,w:150,h:22},{x:2780,y:455,w:180,h:22}];
 var Q=[
  {skill:"Place value: tens",q:"Scanner reading: 347. What digit is in the tens place?",a:"4",o:["3","4","7","0"],ex:"In 347, the tens digit is 4."},
@@ -153,7 +294,7 @@ function interact(){if($("overlay").classList.contains("show"))return;var o=near
  if(o.id==="baby"&&!rescued){if(!P.suit){toast("You need the Sloth Suit to reach the baby safely.");return}ask(Q[4],function(){rescued=true;o.done=true;S.xp+=50;S.paws+=5;S.rescues++;floatText("SAVED!",o.x,o.id==="baby"?355:G-120,"saved");setTimeout(function(){floatText("+50 XP",o.x,320)},180);save();mission(4);sync();show('<div class="speaker">Rescue Complete</div><h2>🦥 Baby Sloth Reunited!</h2><p>You explored, learned real animal adaptations, and used school skills to complete the rescue.</p><div class="fact"><b>Creature Fact:</b> Sloths have long curved claws that help them hang from rainforest branches.</div><p><b>+50 XP • +5 Paw Tokens • Sloth Rescue Badge</b></p><div class="actions"><button id="done" class="btn gold">Keep Exploring</button></div>');$("done").onclick=hide});return}
  toast("Already investigated — keep exploring!");
 }
-function power(){if(pods<3){toast("Collect 3 Creature Data Pods first.");return}P.suit=!P.suit;P.jump=P.suit?720:610;P.speed=P.suit?320:275;glow=1.2;if(P.suit){suitBurst();floatText("CREATURE POWER!",P.x+P.w/2,P.y-20,"saved")}mission(Math.max(2,step));sync();toast(P.suit?"🦥 Sloth Ability ACTIVE!":"Sloth Ability off")}
+function power(){if(pods<3){toast("Collect 3 Creature Data Pods first.");return}P.suit=!P.suit;P.jump=P.suit?720:610;P.speed=P.suit?320:275;glow=1.2;if(P.suit){transformSequence();suitBurst();floatText("CREATURE POWER!",P.x+P.w/2,P.y-20,"saved")}mission(Math.max(2,step));sync();toast(P.suit?"🦥 Sloth Ability ACTIVE!":"Sloth Ability off")}
 function jump(){if(!$("overlay").classList.contains("show")&&P.on){P.vy=-P.jump;P.on=false}}
 function update(dt){if($("overlay").classList.contains("show"))return;P.vx=(K.r?P.speed:0)-(K.l?P.speed:0);if(P.vx)P.face=Math.sign(P.vx);P.vy+=1550*dt;P.x+=P.vx*dt;P.y+=P.vy*dt;P.x=Math.max(0,Math.min(L-P.w,P.x));P.on=false;PL.forEach(function(p){if(P.x+P.w>p.x&&P.x<p.x+p.w&&P.y+P.h>=p.y&&P.y+P.h<=p.y+38&&P.vy>=0){P.y=p.y-P.h;P.vy=0;P.on=true}});if(P.y>H+250){P.y=G-P.h;P.vy=0}if(step===2&&P.x>2050&&!P.suit){if(P.vx>0)shakeGame();P.x=2050}if(step<3&&P.x>2190&&!O[4].done){if(P.vx>0)shakeGame();P.x=2190}cam=Math.max(0,Math.min(L-W,P.x-W*.36));P.anim+=Math.abs(P.vx)*dt*.03;if(glow>0)glow-=dt;
  FX.forEach(function(f){f.t+=dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.985;f.vy*=.985});FX=FX.filter(function(f){return f.t<f.life});
@@ -165,17 +306,49 @@ function sky(){var g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,"#163f55")
  X.fillStyle="#c7ffd90f";for(var k=0;k<26;k++){var px=(k*157-(cam*.12))%(W+170);if(px<0)px+=W+170;var py=110+(k*83)%360;X.beginPath();X.arc(px,py,2+(k%3),0,Math.PI*2);X.fill()}
  X.fillStyle="#144f3a88";for(var x=-80;x<W+160;x+=95){var h=140+((x+cam*.2)%150);X.fillRect(x,H-h-100,22,h);X.beginPath();X.arc(x+10,H-h-100,65,0,Math.PI*2);X.fill()}}
 function world(){X.fillStyle="#123c28";X.fillRect(0,G,L,140);X.fillStyle="#2b754a";X.fillRect(0,G,L,17);[[560,390],[1490,320],[2030,300],[2650,330],[3090,350]].forEach(function(a,i){X.fillStyle="#6a452b";X.fillRect(a[0],a[1],40,G-a[1]);X.fillStyle=i%2?"#217048":"#2a8451";for(var j=0;j<5;j++){X.beginPath();X.arc(a[0]+20+(j-2)*26,a[1]+10+(j%2)*20,62,0,Math.PI*2);X.fill()}});X.fillStyle="#2b8ca1";X.fillRect(1040,G-8,260,50);X.fillStyle="#8adff0";X.fillRect(2850,260,95,G-260);PL.slice(1).forEach(function(p){X.fillStyle="#6c4d2e";rr(p.x,p.y,p.w,p.h,9);X.fill();X.fillStyle="#4e9a55";X.fillRect(p.x,p.y,p.w,7)});X.fillStyle="#dce9e7";rr(70,G-165,230,130,22);X.fill();X.fillStyle="#203c48";rr(105,G-140,115,72,12);X.fill();X.fillStyle="#f8d66b";X.font="bold 22px system-ui";X.fillText("WILDLAB",105,G-92)}
-function objs(){O.forEach(function(o){if(o.done&&o.id!=="gate"&&o.id!=="baby")return;var y=o.id==="gate"?340:o.id==="baby"?365:G-105;if(o.t==="scan"){X.fillStyle="#244e5b";rr(o.x-30,G-100,60,76,12);X.fill();X.fillStyle="#6cf2bd";X.fillRect(o.x-16,G-84,32,22)}else if(o.t==="gate"){if(!o.done){X.strokeStyle="#55a64c";X.lineWidth=16;for(var i=0;i<5;i++){X.beginPath();X.moveTo(o.x-55+i*28,260);X.bezierCurveTo(o.x-30+i*28,360,o.x+20+i*20,420,o.x-25+i*30,G);X.stroke()}}}else{X.font=o.id==="baby"?"62px Apple Color Emoji":"54px Apple Color Emoji";X.fillText(o.emo,o.x-28,y)}if(!o.done){X.strokeStyle="#ffe070aa";X.lineWidth=3;X.beginPath();X.arc(o.x,y-5,45+Math.sin(performance.now()/240)*7,0,Math.PI*2);X.stroke()}})}
-function player(){var x=P.x,y=P.y;if(glow>0||P.suit){var pulse=61+Math.sin(performance.now()/90)*8;X.strokeStyle=P.suit?"#fff08bd9":"#ffe27a88";X.lineWidth=4;X.beginPath();X.arc(x+23,y+38,pulse,0,Math.PI*2);X.stroke();X.strokeStyle="#77ffc684";X.lineWidth=2;X.beginPath();X.arc(x+23,y+38,pulse+15,0,Math.PI*2);X.stroke()}X.fillStyle="#0004";X.beginPath();X.ellipse(x+24,y+76,30,8,0,0,Math.PI*2);X.fill();var w=Math.sin(P.anim)*7;X.strokeStyle=P.suit?"#d9c45a":"#243b47";X.lineWidth=12;X.lineCap="round";X.beginPath();X.moveTo(x+20,y+53);X.lineTo(x+16+w,y+73);X.moveTo(x+31,y+53);X.lineTo(x+35-w,y+73);X.stroke();X.fillStyle=P.suit?"#87b84b":"#3a88c7";rr(x+8,y+23,34,38,11);X.fill();X.fillStyle="#d8a173";X.beginPath();X.arc(x+25,y+17,17,0,Math.PI*2);X.fill();X.fillStyle="#3a251b";X.beginPath();X.arc(x+23,y+10,17,Math.PI,Math.PI*2);X.fill();if(P.suit){X.strokeStyle="#ffe17a";X.lineWidth=5;X.beginPath();X.moveTo(x+7,y+38);X.lineTo(x-7,y+31);X.moveTo(x+42,y+38);X.lineTo(x+55,y+31);X.stroke()}
- FX.forEach(function(f){var a=1-f.t/f.life;X.fillStyle="rgba(255,235,122,"+Math.max(0,a)+")";X.beginPath();X.arc(f.x,f.y,f.r*a+.7,0,Math.PI*2);X.fill()})
-}
-function draw(){X.clearRect(0,0,W,H);sky();X.save();X.translate(-cam,0);world();objs();player();FLOATS.forEach(function(f){var a=Math.max(0,1-f.t/f.life);X.save();X.globalAlpha=a;X.font="1000 28px system-ui";X.textAlign="center";X.lineWidth=6;X.strokeStyle="#0009";X.strokeText(f.text,f.x,f.y);X.fillStyle=f.kind==="saved"?"#9affc2":"#fff08b";X.fillText(f.text,f.x,f.y);X.restore()});X.restore();var o=near();if(o&&!$("overlay").classList.contains("show")){X.fillStyle="#04171ddd";rr(W/2-155,H-82,310,46,16);X.fill();X.strokeStyle="#ffffff1d";X.lineWidth=1;X.stroke();X.fillStyle="#fff";X.font="bold 17px system-ui";X.textAlign="center";X.fillText("✋ INTERACT • "+o.name,W/2,H-52);X.textAlign="left"}}
+function objs(){O.forEach(function(o){if(o.done&&o.id!=="gate"&&o.id!=="baby")return;var y=o.id==="gate"?340:o.id==="baby"?365:G-105;if(o.t==="scan"){X.fillStyle="#244e5b";rr(o.x-30,G-100,60,76,12);X.fill();X.fillStyle="#6cf2bd";X.fillRect(o.x-16,G-84,32,22)}else if(o.t==="gate"){if(!o.done){X.strokeStyle="#55a64c";X.lineWidth=16;for(var i=0;i<5;i++){X.beginPath();X.moveTo(o.x-55+i*28,260);X.bezierCurveTo(o.x-30+i*28,360,o.x+20+i*20,420,o.x-25+i*30,G);X.stroke()}}}if(!o.done){X.strokeStyle="#ffe07066";X.lineWidth=2;X.beginPath();X.arc(o.x,y-5,45+Math.sin(performance.now()/240)*7,0,Math.PI*2);X.stroke()}})}
+function player(){var x=P.x,y=P.y;X.fillStyle="#0004";X.beginPath();X.ellipse(x+24,y+76,30,8,0,0,Math.PI*2);X.fill();if(glow>0||P.suit){var pulse=61+Math.sin(performance.now()/90)*8;X.strokeStyle=P.suit?"#fff08bd9":"#ffe27a88";X.lineWidth=4;X.beginPath();X.arc(x+23,y+38,pulse,0,Math.PI*2);X.stroke();X.strokeStyle="#77ffc684";X.lineWidth=2;X.beginPath();X.arc(x+23,y+38,pulse+15,0,Math.PI*2);X.stroke()}FX.forEach(function(f){var a=1-f.t/f.life;X.fillStyle="rgba(255,235,122,"+Math.max(0,a)+")";X.beginPath();X.arc(f.x,f.y,f.r*a+.7,0,Math.PI*2);X.fill()})}
+function draw(){X.clearRect(0,0,W,H);sky();X.save();X.translate(-cam,0);world();objs();player();FLOATS.forEach(function(f){var a=Math.max(0,1-f.t/f.life);X.save();X.globalAlpha=a;X.font="1000 28px system-ui";X.textAlign="center";X.lineWidth=6;X.strokeStyle="#0009";X.strokeText(f.text,f.x,f.y);X.fillStyle=f.kind==="saved"?"#9affc2":"#fff08b";X.fillText(f.text,f.x,f.y);X.restore()});X.restore();updateCSSActors();var o=near();if(o&&!$("overlay").classList.contains("show")){X.fillStyle="#04171ddd";rr(W/2-155,H-82,310,46,16);X.fill();X.strokeStyle="#ffffff1d";X.lineWidth=1;X.stroke();X.fillStyle="#fff";X.font="bold 17px system-ui";X.textAlign="center";X.fillText("✋ INTERACT • "+o.name,W/2,H-52);X.textAlign="left"}}
 function loop(t){var dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();requestAnimationFrame(loop)}
 function hold(id,k){var b=$(id),dn=function(e){e.preventDefault();K[k]=true},up=function(e){e.preventDefault();K[k]=false};b.addEventListener("pointerdown",dn);b.addEventListener("pointerup",up);b.addEventListener("pointercancel",up)}
 hold("left","l");hold("right","r");$("jump").onpointerdown=function(e){e.preventDefault();jump()};$("interact").onclick=interact;$("power").onclick=power;
 function parent(){var h=S.history,c=h.filter(function(x){return x.isCorrect}).length;$("acc").textContent=h.length?Math.round(c/h.length*100)+"%":"—";$("att").textContent=h.length;$("cor").textContent=c;$("resc").textContent=S.rescues;var m={};h.forEach(function(x){if(!m[x.skill])m[x.skill]={a:0,c:0};m[x.skill].a++;if(x.isCorrect)m[x.skill].c++});var r=Object.entries(m).sort(function(a,b){return a[1].c/a[1].a-b[1].c/b[1].a}),w=r.filter(function(x){return x[1].c/x[1].a<.75});$("focus").innerHTML="<b>🎯 Practice next:</b> "+(w.length?w.slice(0,3).map(function(x){return x[0]+" ("+Math.round(x[1].c/x[1].a*100)+"%)"}).join(" • "):"Play a few challenges and the game will identify patterns.");$("skills").innerHTML=r.map(function(x){var p=Math.round(x[1].c/x[1].a*100);return '<div class="skill"><div class="line"><b>'+x[0]+'</b><span>'+x[1].c+'/'+x[1].a+' • '+p+'%</span></div><div class="meter"><span style="width:'+p+'%"></span></div></div>'}).join("")}
 $("parentBtn").onclick=function(){parent();$("parent").classList.add("show");$("parent").scrollIntoView({behavior:"smooth"})};$("closeParent").onclick=function(){$("parent").classList.remove("show")};
-sync();mission(0);requestAnimationFrame(function(t){last=t;loop(t)});
+
+function bindTouchHold(id,start,end){
+ var e=$(id);if(!e)return;
+ e.addEventListener("touchstart",function(ev){ev.preventDefault();start()}, {passive:false});
+ e.addEventListener("touchend",function(ev){ev.preventDefault();end&&end()}, {passive:false});
+ e.addEventListener("touchcancel",function(ev){ev.preventDefault();end&&end()}, {passive:false});
+ e.addEventListener("mousedown",function(ev){ev.preventDefault();start()});
+ e.addEventListener("mouseup",function(ev){ev.preventDefault();end&&end()});
+ e.addEventListener("mouseleave",function(){end&&end()})
+}
+bindTouchHold("mLeft",function(){K.l=true},function(){K.l=false});
+bindTouchHold("mRight",function(){K.r=true},function(){K.r=false});
+bindTouchHold("mUp",function(){jump()},function(){});
+bindTouchHold("mDown",function(){P.crouch=true},function(){P.crouch=false});
+function mobileAction(){
+ if($("overlay").classList.contains("show")){
+   var b=$("dialog").querySelector(".actions button");if(b){b.click();return}
+   toast("Choose an answer to continue.");return
+ }
+ if(near()){interact();return}
+ if(pods>=3){power();return}
+ toast("Move near a glowing creature or scanner.")
+}
+["touchstart","mousedown"].forEach(function(evt){$("mAction").addEventListener(evt,function(e){e.preventDefault();mobileAction()},{passive:false})});
+window.addEventListener("keydown",function(e){
+ if(e.key==="ArrowLeft")K.l=true;
+ if(e.key==="ArrowRight")K.r=true;
+ if(e.key==="ArrowUp"||e.key===" "){e.preventDefault();jump()}
+ if(e.key==="ArrowDown")P.crouch=true;
+ if(e.key.toLowerCase()==="e")interact();
+ if(e.key.toLowerCase()==="q")power()
+});
+window.addEventListener("keyup",function(e){if(e.key==="ArrowLeft")K.l=false;if(e.key==="ArrowRight")K.r=false;if(e.key==="ArrowDown")P.crouch=false});
+
+initCSSActors();sync();mission(0);requestAnimationFrame(function(t){last=t;loop(t)});
 </script>
 </body>
 </html>
