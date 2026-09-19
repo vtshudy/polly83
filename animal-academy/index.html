@@ -345,15 +345,147 @@ canvas{
   .mission{width:46%;transform:translateX(-50%) scale(.88);transform-origin:top center}
 }
 
+
+/* ===== v5.4 full-screen jungle platformer ===== */
+.buildTag{
+  position:absolute;left:12px;bottom:12px;z-index:40;
+  padding:4px 7px;border-radius:999px;background:rgba(0,0,0,.34);
+  color:rgba(255,255,255,.72);font-size:9px;font-weight:900;letter-spacing:.4px;
+  pointer-events:none
+}
+
+/* gameplay creatures are part of the scene, not UI cards */
+.creatureAnchor{width:104px;height:100px}
+.creatureCard{
+  width:104px;min-height:0!important;padding:0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important
+}
+.creatureCard .speciesBadge,.creatureCard .creatureName{display:none!important}
+.creatureArt{height:78px;margin:0}
+.creatureArt svg{width:84px;height:78px}
+.powerDisc{
+  width:26px;height:26px;margin:-8px auto 0;
+  border:3px solid #111;
+  box-shadow:0 0 0 3px rgba(255,255,255,.9),0 0 14px #39FF14
+}
+
+/* larger hero */
+.playerAnchor{width:92px;height:132px}
+.playerAvatar{width:92px;height:132px}
+.avatarGlow{inset:-5px 2px 0}
+.avatarHead{left:28px;top:4px;width:39px;height:39px}
+.avatarHair{left:26px;width:44px}
+.avatarVisor{left:26px;top:17px;width:43px;height:12px}
+.avatarBody{left:17px;top:42px;width:59px;height:55px}
+.avatarChest{left:39px;top:55px}
+.avatarArm{top:48px;height:47px}.avatarArm.a1{left:4px}.avatarArm.a2{right:4px}
+.avatarLeg{top:92px;height:42px}.avatarLeg.l1{left:22px}.avatarLeg.l2{right:22px}
+
+/* compact circular HUD */
+.hud{
+  top:12px;left:12px;right:auto;display:flex;align-items:center;gap:8px;
+  background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important
+}
+.hud .pill,.hud .btn{
+  min-width:54px;width:auto;height:54px;border-radius:27px;
+  padding:0 12px;border:3px solid rgba(240,255,249,.95)!important;
+  background:linear-gradient(180deg,#149b83,#076c5d)!important;color:#fff!important;
+  box-shadow:0 0 0 3px rgba(0,41,55,.5),0 5px 0 rgba(0,0,0,.18)!important;
+  text-shadow:2px 2px 0 rgba(0,0,0,.22)
+}
+#xpPill,#dataPill,#pawsPill{font-size:12px}
+#parentBtn{width:54px;min-width:54px;font-size:0;padding:0}
+#parentBtn::after{content:"⚙";font-size:24px}
+#livesPill{display:none}
+
+/* mission banner floats over the world */
+.mission{
+  top:14px;left:50%;right:auto;transform:translateX(-50%);
+  width:min(390px,42vw);padding:0;display:block
+}
+.mission>div{
+  border:3px solid rgba(240,255,249,.96)!important;border-radius:28px!important;
+  padding:8px 16px!important;
+  background:linear-gradient(180deg,#16a58a,#08745f)!important;
+  box-shadow:0 0 0 3px rgba(0,41,55,.48),0 5px 0 rgba(0,0,0,.16)!important;
+  text-align:center
+}
+.mission>div:last-child{display:none!important}
+#missionBox b{font-size:11px!important;text-transform:uppercase;letter-spacing:.45px}
+#missionBox span{font-size:10px!important}
+
+/* foreground leaves vignette */
+.game::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:
+    radial-gradient(ellipse at -4% 86%,rgba(22,88,41,.78) 0 11%,transparent 12%),
+    radial-gradient(ellipse at 5% 98%,rgba(36,116,46,.68) 0 13%,transparent 14%),
+    radial-gradient(ellipse at 104% 88%,rgba(18,76,36,.72) 0 12%,transparent 13%),
+    radial-gradient(ellipse at 96% 101%,rgba(31,108,45,.62) 0 14%,transparent 15%);
+  mix-blend-mode:multiply
+}
+
+/* remove webpage-like sections during mobile play */
+@media (hover:none),(pointer:coarse){
+  html,body{background:#0a2521}
+  body{padding-bottom:0!important;overflow:hidden}
+  #app{max-width:none;padding:0}
+  .top{display:none!important}
+  .panel{display:none!important}
+  .game{
+    width:100vw;height:74svh;min-height:74svh;
+    border-radius:0 0 26px 26px;border-width:0 0 4px 0;
+    box-shadow:none
+  }
+  canvas{min-height:74svh;height:74svh;border-radius:0}
+  .environmentLayer,.creatureLayer,.actorLayer{border-radius:0}
+  .buildTag{bottom:7px;left:7px}
+  .dpad{
+    width:154px!important;height:154px!important;left:max(8px,env(safe-area-inset-left))!important;
+    bottom:max(12px,env(safe-area-inset-bottom))!important;
+    border:3px solid rgba(255,255,255,.22)!important;
+    background:radial-gradient(circle,rgba(0,75,135,.22) 0 55%,rgba(0,24,42,.48) 56% 100%)!important;
+    box-shadow:0 0 0 4px rgba(57,255,20,.12)!important
+  }
+  .dpad::after{inset:43px!important;border:2px solid rgba(255,255,255,.18)!important;background:rgba(255,255,255,.08)!important}
+  .dpadBtn{
+    width:54px!important;height:54px!important;font-size:23px!important;
+    border:2px solid rgba(255,255,255,.35)!important;background:rgba(0,75,135,.62)!important;
+    box-shadow:0 5px 12px rgba(0,0,0,.25)!important
+  }
+  .dpadBtn.up{left:50px!important;top:2px!important}.dpadBtn.down{left:50px!important;bottom:2px!important}
+  .dpadBtn.left{left:2px!important;top:50px!important}.dpadBtn.right{right:2px!important;top:50px!important}
+  .mobileAction{
+    width:108px!important;height:108px!important;right:max(12px,env(safe-area-inset-right))!important;
+    bottom:max(19px,env(safe-area-inset-bottom))!important;
+    border:4px solid rgba(255,255,255,.32)!important;
+    background:radial-gradient(circle at 35% 25%,#c8ff9c,#39FF14 48%,#18a50e 100%)!important;
+    box-shadow:0 0 0 4px rgba(0,75,135,.38),0 7px 17px rgba(0,0,0,.3)!important;
+    font-size:12px!important
+  }
+  .mobileAction .bolt{font-size:31px!important}
+  .hud{transform:scale(.76);transform-origin:top left;top:8px;left:8px}
+  .mission{top:10px;width:43vw;transform:translateX(-50%) scale(.87);transform-origin:top center}
+}
+@media (orientation:landscape) and (hover:none),(orientation:landscape) and (pointer:coarse){
+  .game{height:100svh;min-height:100svh;border:0;border-radius:0}
+  canvas{height:100svh;min-height:100svh}
+  .hud{transform:scale(.88);top:10px;left:10px}
+  .mission{width:min(390px,36vw);transform:translateX(-50%) scale(.95)}
+}
+
 </style>
 </head>
 <body>
 <div id="app">
 <div class="top">
- <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">JUNGLE PLATFORMER v5.3</span></div>
+ <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">FULLSCREEN JUNGLE v5.4</span></div>
 </div>
 <div id="game" class="game active">
  <canvas id="c" width="1280" height="720"></canvas>
+ <div class="buildTag">v5.4</div>
  <div class="environmentLayer" id="environmentLayer" aria-hidden="true"></div>
  <div id="creatureLayer" class="creatureLayer" aria-hidden="true"></div>
  <div class="actorLayer" aria-hidden="true">
@@ -470,11 +602,11 @@ function initCSSActors(){
 }
 function creatureWorldY(o){if(o.id==="baby")return 365;if(o.id==="frog")return G-96;if(o.id==="toucan")return G-118;if(o.id==="sloth")return G-110;return G-100}
 function updateCSSActors(){updateWorldDecor();
- var rect=C.getBoundingClientRect(),sx=rect.width/W,sy=rect.height/H,sc=Math.max(.58,Math.min(1.1,(sx+sy)/2)),pa=$("playerAnchor"),av=$("playerAvatar");
- pa.style.left=((P.x-cam)*sx)+"px";pa.style.top=(P.y*sy)+"px";pa.style.transform="scale("+sc+")";
+ var rect=C.getBoundingClientRect(),sx=rect.width/W,sy=rect.height/H,base=Math.max(.58,Math.min(1.1,(sx+sy)/2)),psc=Math.min(1.65,base*1.62),csc=Math.min(1.25,base*1.16),pa=$("playerAnchor"),av=$("playerAvatar");
+ pa.style.left=((P.x-cam)*sx)+"px";pa.style.top=(P.y*sy)+"px";pa.style.transform="scale("+psc+")";
  av.classList.toggle("moving",Math.abs(P.vx)>8&&P.on);av.classList.toggle("airborne",!P.on);av.classList.toggle("suitOn",P.suit);av.classList.toggle("crouching",P.crouch);
  av.classList.remove("power-cheetah","power-falcon","power-elephant","power-sloth");av.classList.add("power-"+activePower);
- O.forEach(function(o){var e=creatureEls[o.id];if(!e)return;var cx=(o.x-cam)*sx,cy=creatureWorldY(o)*sy;e.style.left=cx+"px";e.style.top=cy+"px";e.style.transform="translate(-50%,-100%) scale("+sc+")";e.style.display=(cx<-160||cx>rect.width+160)?"none":"block";e.classList.toggle("scanned",!!o.done)})
+ O.forEach(function(o){var e=creatureEls[o.id];if(!e)return;var cx=(o.x-cam)*sx,cy=creatureWorldY(o)*sy;e.style.left=cx+"px";e.style.top=cy+"px";e.style.transform="translate(-50%,-100%) scale("+csc+")";e.style.display=(cx<-150||cx>rect.width+150)?"none":"block";e.classList.toggle("scanned",!!o.done)})
 }
 function transformSequence(){
  var f=$("screenFlash"),pa=$("playerAnchor");f.classList.remove("fire");void f.offsetWidth;f.classList.add("fire");
@@ -532,58 +664,58 @@ function update(dt){if($("overlay").classList.contains("show"))return;P.vx=(K.r?
 }
 function rr(x,y,w,h,r){X.beginPath();if(X.roundRect)X.roundRect(x,y,w,h,r);else X.rect(x,y,w,h)}
 function sky(){
- var g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,"#72D6E5");g.addColorStop(.48,"#6FC6C6");g.addColorStop(1,"#5DA36A");X.fillStyle=g;X.fillRect(0,0,W,H);
- // distant canopy
- X.save();X.translate(-(cam*.08)%180,0);
- X.fillStyle="#73A85F";for(var x=-180;x<W+360;x+=85){var y=250+(x%170)*.08;X.beginPath();X.arc(x,y,64,0,Math.PI*2);X.arc(x+44,y+18,52,0,Math.PI*2);X.arc(x-38,y+24,45,0,Math.PI*2);X.fill()}
- X.restore();
- // deep vertical jungle trunks
- X.save();X.translate(-(cam*.18)%220,0);for(var t=-220;t<W+440;t+=120){
-   X.fillStyle=t%240===0?"#315B3B":"#426D45";X.fillRect(t,300,28,H-300);
-   X.fillStyle="#2D5839";X.beginPath();X.moveTo(t+14,300);X.lineTo(t-45,235);X.lineTo(t-30,222);X.lineTo(t+14,280);X.fill();
- }
- X.restore();
- // mid foliage
- X.save();X.translate(-(cam*.28)%240,0);X.fillStyle="#3E7A44";
- for(var m=-240;m<W+480;m+=95){X.beginPath();X.arc(m,400,72,0,Math.PI*2);X.arc(m+50,380,56,0,Math.PI*2);X.fill()}
- X.restore();
+ var g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,"#73D7E7");g.addColorStop(.48,"#72C8C3");g.addColorStop(1,"#5B9860");X.fillStyle=g;X.fillRect(0,0,W,H);
+ // far pale canopy
+ X.save();X.translate(-(cam*.06)%190,0);X.fillStyle="#7EAD68";
+ for(var a=-190;a<W+380;a+=88){var yy=248+(a%176)*.05;X.beginPath();X.arc(a,yy,68,0,Math.PI*2);X.arc(a+45,yy+16,54,0,Math.PI*2);X.arc(a-42,yy+23,48,0,Math.PI*2);X.fill()}X.restore();
+ // dark tree columns
+ X.save();X.translate(-(cam*.15)%240,0);
+ for(var t=-240;t<W+480;t+=126){X.fillStyle=t%252===0?"#355F3E":"#416C43";rr(t,286,31,H-286,12);X.fill();
+   X.fillStyle="#2D5838";X.beginPath();X.moveTo(t+16,330);X.lineTo(t-55,242);X.lineTo(t-37,229);X.lineTo(t+16,295);X.fill();
+   X.beginPath();X.moveTo(t+12,360);X.lineTo(t+78,270);X.lineTo(t+93,282);X.lineTo(t+20,390);X.fill();
+ }X.restore();
+ // mid jungle
+ X.save();X.translate(-(cam*.27)%250,0);X.fillStyle="#3E7844";
+ for(var m=-250;m<W+500;m+=92){X.beginPath();X.arc(m,395,76,0,Math.PI*2);X.arc(m+50,377,58,0,Math.PI*2);X.arc(m-45,420,52,0,Math.PI*2);X.fill()}X.restore();
+ // hanging vines silhouettes
+ X.strokeStyle="rgba(37,103,45,.55)";X.lineWidth=7;
+ for(var v=80;v<W;v+=245){var xx=v-((cam*.2)%245);X.beginPath();X.moveTo(xx,0);X.bezierCurveTo(xx+20,70,xx-28,130,xx+8,215);X.stroke()}
 }
 function world(){
- // lower ground with rich dirt
- X.fillStyle="#6C4B32";X.fillRect(0,G,L,150);
- X.fillStyle="#8A5F3C";X.fillRect(0,G+22,L,128);
- // grass cap
- X.fillStyle="#57B844";X.fillRect(0,G-8,L,30);
- X.fillStyle="#8FDB51";X.fillRect(0,G-8,L,8);
+ X.fillStyle="#6E4A30";X.fillRect(0,G,L,160);
+ X.fillStyle="#8A5B38";X.fillRect(0,G+26,L,134);
+ // top soil and grass
+ X.fillStyle="#4BAA3E";X.fillRect(0,G-10,L,34);X.fillStyle="#91DF50";X.fillRect(0,G-10,L,8);
 
- // giant tree trunks for depth
- [[520,220,105],[1510,175,125],[2520,205,115],[3140,190,120]].forEach(function(a,i){
-   var x=a[0],y=a[1],w=a[2];X.fillStyle=i%2?"#7B4D2D":"#855633";rr(x,y,w,G-y+32,30);X.fill();
-   X.fillStyle="rgba(255,180,102,.16)";rr(x+18,y+8,18,G-y-20,12);X.fill();
-   X.fillStyle="#3E7B3E";for(var c=0;c<5;c++){X.beginPath();X.arc(x+w/2+(c-2)*38,y+18+(c%2)*24,64,0,Math.PI*2);X.fill()}
+ // giant background trunks within world
+ [[520,215,110],[1515,168,132],[2525,205,118],[3140,180,122]].forEach(function(a,i){
+   var x=a[0],y=a[1],w=a[2];X.fillStyle=i%2?"#774829":"#845331";rr(x,y,w,G-y+38,28);X.fill();
+   X.fillStyle="rgba(255,190,112,.14)";rr(x+17,y+10,19,G-y-28,10);X.fill();
  });
 
- // platforms as chunky dirt islands with grass tops
- PL.slice(1).forEach(function(p){
-   X.fillStyle="rgba(0,0,0,.18)";X.beginPath();X.ellipse(p.x+p.w/2,p.y+24,p.w*.48,13,0,0,Math.PI*2);X.fill();
-   X.fillStyle="#775035";rr(p.x,p.y,p.w,78,12);X.fill();
-   X.fillStyle="#8D6040";X.fillRect(p.x+8,p.y+16,p.w-16,58);
-   X.fillStyle="#54B73F";rr(p.x-6,p.y-8,p.w+12,22,10);X.fill();
-   X.fillStyle="#8FDC4A";X.fillRect(p.x,p.y-8,p.w,7);
-   // dangling roots
-   X.strokeStyle="#68442F";X.lineWidth=5;for(var r=18;r<p.w-12;r+=36){X.beginPath();X.moveTo(p.x+r,p.y+72);X.bezierCurveTo(p.x+r+4,p.y+92,p.x+r-8,p.y+105,p.x+r+3,p.y+118);X.stroke()}
+ // floating dirt ledges
+ PL.slice(1).forEach(function(p,idx){
+   X.fillStyle="rgba(0,0,0,.18)";X.beginPath();X.ellipse(p.x+p.w/2,p.y+83,p.w*.5,13,0,0,Math.PI*2);X.fill();
+   X.fillStyle="#70492F";rr(p.x,p.y,p.w,84,10);X.fill();
+   X.fillStyle="#8B5D3B";X.fillRect(p.x+8,p.y+18,p.w-16,62);
+   // angular lower cliff chunks
+   X.fillStyle="#754D32";for(var c=0;c<4;c++){X.beginPath();X.moveTo(p.x+c*p.w/4,p.y+78);X.lineTo(p.x+(c+.5)*p.w/4,p.y+98+(c%2)*10);X.lineTo(p.x+(c+1)*p.w/4,p.y+78);X.closePath();X.fill()}
+   // grass cap
+   X.fillStyle="#53B73F";rr(p.x-7,p.y-10,p.w+14,24,10);X.fill();X.fillStyle="#91DF4A";X.fillRect(p.x,p.y-10,p.w,7);
+   // blades
+   X.strokeStyle="#3D9138";X.lineWidth=4;for(var b=8;b<p.w;b+=19){X.beginPath();X.moveTo(p.x+b,p.y);X.lineTo(p.x+b-4,p.y-13);X.moveTo(p.x+b,p.y);X.lineTo(p.x+b+5,p.y-12);X.stroke()}
+   // roots
+   X.strokeStyle="#593B2B";X.lineWidth=5;for(var r=20;r<p.w-8;r+=38){X.beginPath();X.moveTo(p.x+r,p.y+72);X.bezierCurveTo(p.x+r+5,p.y+95,p.x+r-10,p.y+105,p.x+r+4,p.y+123);X.stroke()}
  });
 
- // river opening
- X.fillStyle="#3292A8";X.fillRect(1040,G-5,260,55);X.fillStyle="#6AD9E8";X.fillRect(1040,G-5,260,7);
+ // water hazards
+ X.fillStyle="#318EA7";X.fillRect(1040,G-6,260,58);X.fillStyle="#75E1ED";X.fillRect(1040,G-6,260,8);
+ var wg=X.createLinearGradient(0,250,0,G);wg.addColorStop(0,"#C7F8FF");wg.addColorStop(.4,"#6DD8E7");wg.addColorStop(1,"#35A2B6");X.fillStyle=wg;X.fillRect(2850,250,98,G-250);
 
- // waterfall / far right
- var wg=X.createLinearGradient(0,260,0,G);wg.addColorStop(0,"#B8F4FB");wg.addColorStop(.4,"#69D6E5");wg.addColorStop(1,"#36A5B8");X.fillStyle=wg;X.fillRect(2850,260,95,G-260);
-
- // WildLab base
- X.fillStyle="#E9F4F0";rr(65,G-176,245,140,24);X.fill();X.strokeStyle="#111";X.lineWidth=5;X.stroke();
- X.fillStyle="#154C65";rr(100,G-151,126,76,13);X.fill();X.stroke();
- X.fillStyle="#FFE052";X.font="900 22px system-ui";X.fillText("WILDLAB",107,G-103);
+ // base
+ X.fillStyle="#E8F0E8";rr(68,G-182,245,145,24);X.fill();X.strokeStyle="#111";X.lineWidth=5;X.stroke();
+ X.fillStyle="#19485B";rr(102,G-154,129,78,13);X.fill();X.stroke();
+ X.fillStyle="#F9D553";X.font="900 22px system-ui";X.fillText("WILDLAB",109,G-106);
 }
 function objs(){
  O.forEach(function(o){
