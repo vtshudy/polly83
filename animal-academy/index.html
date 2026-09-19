@@ -476,16 +476,102 @@ canvas{
   .mission{width:min(390px,36vw);transform:translateX(-50%) scale(.95)}
 }
 
+
+/* ===== v5.5 visual-only gameplay chrome ===== */
+.top,.mission,.panel:first-of-type,.buildTag{display:none!important}
+.game{border-radius:0!important}
+.hud{
+  position:absolute!important;top:12px!important;left:12px!important;right:auto!important;z-index:30!important;
+  display:flex!important;align-items:center!important;gap:10px!important;
+  padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transform:none!important
+}
+.hudOrb{
+  width:58px;height:58px;border-radius:50%;border:3px solid rgba(240,255,249,.96);
+  background:linear-gradient(180deg,#13a28a,#056959);
+  box-shadow:0 0 0 3px rgba(0,35,48,.5),0 6px 0 rgba(0,0,0,.18),inset 0 2px rgba(255,255,255,.18);
+  display:grid;place-items:center;padding:0;overflow:hidden
+}
+.hudOrb svg{width:40px;height:40px;fill:#eafff3;stroke:#083944;stroke-width:2}
+.pauseOrb{position:absolute;left:calc(100vw - 76px);top:0}
+.pauseOrb span{position:absolute;width:7px;height:27px;border-radius:4px;background:#fff;border:2px solid rgba(0,0,0,.18)}
+.pauseOrb span:first-child{transform:translateX(-7px)}.pauseOrb span:last-child{transform:translateX(7px)}
+.discMeter{
+  height:58px;padding:0 12px;border-radius:30px;display:flex;align-items:center;gap:8px;
+  border:3px solid rgba(240,255,249,.96);
+  background:linear-gradient(180deg,#13a28a,#056959);
+  box-shadow:0 0 0 3px rgba(0,35,48,.5),0 6px 0 rgba(0,0,0,.18),inset 0 2px rgba(255,255,255,.18)
+}
+.discMeter i{
+  width:27px;height:27px;border-radius:50%;display:block;
+  border:3px solid #dfffee;background:#0b4850;box-shadow:inset 0 0 0 4px #08323a
+}
+.discMeter i.on{background:radial-gradient(circle,#fff 0 14%,#39FF14 18% 54%,#008968 58%);box-shadow:0 0 12px #39FF14,inset 0 0 0 3px #063b3f}
+#xpPill,#pawsPill,#livesPill{display:none!important}
+
+/* keep world visually dominant */
+.game::after{
+  background:
+    radial-gradient(ellipse at -6% 84%,rgba(20,79,38,.82) 0 12%,transparent 13%),
+    radial-gradient(ellipse at 4% 101%,rgba(29,106,42,.74) 0 15%,transparent 16%),
+    radial-gradient(ellipse at 106% 86%,rgba(17,74,34,.80) 0 13%,transparent 14%),
+    radial-gradient(ellipse at 96% 103%,rgba(29,101,43,.72) 0 15%,transparent 16%)
+}
+.creatureCard{filter:drop-shadow(0 10px 4px rgba(0,0,0,.28))}
+.powerDisc{transform:scale(.86);opacity:.9}
+
+/* icon-only touch controls */
+.mobileAction{
+  width:104px!important;height:104px!important;border-radius:50%!important;
+  border:4px solid rgba(232,255,241,.45)!important;
+  background:radial-gradient(circle at 34% 24%,#d7ffae,#39FF14 48%,#159a0d 100%)!important;
+  color:#102b11!important;
+  box-shadow:0 0 0 4px rgba(0,75,135,.30),0 9px 22px rgba(0,0,0,.33)!important
+}
+.mobileAction .bolt{font-size:46px!important;line-height:1}
+.dpad{
+  border:0!important;background:rgba(0,42,57,.22)!important;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.11)!important
+}
+.dpad::after{background:rgba(0,75,135,.16)!important;border:0!important}
+.dpadBtn{
+  border:2px solid rgba(235,255,246,.34)!important;
+  background:rgba(0,64,94,.54)!important;
+  box-shadow:0 6px 15px rgba(0,0,0,.24)!important;
+  color:white!important
+}
+
+/* no gameplay text chrome */
+.toast{display:none!important}
+
+/* question/discovery text only appears during learning moments */
+.overlay{z-index:100!important}
+.dialog{max-height:88svh;overflow:auto}
+
+/* full viewport on touch devices */
+@media (hover:none),(pointer:coarse){
+  html,body{width:100%;height:100%;overflow:hidden!important}
+  #app{width:100vw;height:100svh;padding:0!important}
+  .game{width:100vw!important;height:100svh!important;min-height:100svh!important;border:0!important;box-shadow:none!important}
+  canvas{width:100%!important;height:100svh!important;min-height:100svh!important;border-radius:0!important}
+  .environmentLayer,.creatureLayer,.actorLayer{border-radius:0!important}
+  .mobileControls{display:block!important}
+  .hud{top:max(10px,env(safe-area-inset-top))!important;left:max(10px,env(safe-area-inset-left))!important}
+  .pauseOrb{left:auto;right:calc(-100vw + 76px)}
+  .dpad{left:max(10px,env(safe-area-inset-left))!important;bottom:max(10px,env(safe-area-inset-bottom))!important}
+  .mobileAction{right:max(14px,env(safe-area-inset-right))!important;bottom:max(20px,env(safe-area-inset-bottom))!important}
+}
+
 </style>
 </head>
 <body>
 <div id="app">
 <div class="top">
- <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">FULLSCREEN JUNGLE v5.4</span></div>
+ <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">VISUAL ARCADE v5.5</span></div>
 </div>
 <div id="game" class="game active">
  <canvas id="c" width="1280" height="720"></canvas>
- <div class="buildTag">v5.4</div>
+ 
  <div class="environmentLayer" id="environmentLayer" aria-hidden="true"></div>
  <div id="creatureLayer" class="creatureLayer" aria-hidden="true"></div>
  <div class="actorLayer" aria-hidden="true">
@@ -497,12 +583,17 @@ canvas{
      </div>
    </div>
  </div>
- <div class="hud">
-   <div class="pill" id="livesPill">❤️ <b>3</b></div>
-   <div class="pill" id="xpPill">⭐ <span id="xp">0</span> XP</div>
-   <div class="pill" id="dataPill">🔬 <span id="data">0</span>/3</div>
-   <div class="pill" id="pawsPill">🐾 <span id="paws">0</span></div>
-   <button id="parentBtn" class="btn">👨‍👩‍👧 Parent</button>
+ <div class="hud" aria-label="Game status">
+   <div class="hudOrb" id="creatureOrb" aria-hidden="true">
+     <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27"/><circle cx="20" cy="22" r="7"/><circle cx="44" cy="22" r="7"/><circle cx="15" cy="37" r="6"/><circle cx="49" cy="37" r="6"/><path d="M21 44c0-9 6-15 11-15s11 6 11 15c0 7-5 11-11 11s-11-4-11-11Z"/></svg>
+   </div>
+   <div class="discMeter" id="dataPill" aria-label="Creature data">
+     <i></i><i></i><i></i>
+   </div>
+   <button id="parentBtn" class="hudOrb pauseOrb" aria-label="Pause and parent dashboard">
+     <span></span><span></span>
+   </button>
+   <span id="xp" hidden>0</span><span id="data" hidden>0</span><span id="paws" hidden>0</span>
  </div>
  <div id="powerFlash"></div>
  <div class="mission"><div id="missionBox"><b id="mt">Mission 1 • Investigate the signal</b><span id="ms">Walk right from the WildLab and find the field scanner.</span></div><div>🦥 Suit: <b id="suit">Locked</b></div></div>
@@ -521,7 +612,7 @@ canvas{
   <button id="mRight" class="dpadBtn right" aria-label="Move right">➡️</button>
   <button id="mDown" class="dpadBtn down" aria-label="Crouch">⬇️</button>
  </div>
- <button id="mAction" class="mobileAction" aria-label="Action or Creature Power"><span class="bolt">⚡</span>ACTION<br>POWER</button>
+ <button id="mAction" class="mobileAction" aria-label="Action or Creature Power"><span class="bolt">⚡</span></button>
 </div>
 <div class="panel"><b>Amazon Rainforest • Lost Baby Sloth</b><div id="obj">Objective: reach the field scanner.</div><div class="progress"><span id="prog"></span></div></div>
 <div id="parent" class="panel"><div class="line"><div><b>Parent Learning Dashboard</b><div>First attempts only. Retries do not inflate the score.</div></div><button id="closeParent" class="btn">Close</button></div><div class="stats"><div class="stat"><b id="acc">—</b>Accuracy</div><div class="stat"><b id="att">0</b>Questions</div><div class="stat"><b id="cor">0</b>Correct</div><div class="stat"><b id="resc">0</b>Rescues</div></div><div id="focus" class="fact"></div><div id="skills"></div></div>
@@ -626,7 +717,8 @@ var Q=[
 function bumpHud(id){var e=$(id);if(!e)return;e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump")}
 function sync(){
  $("xp").textContent=S.xp;$("paws").textContent=S.paws;$("data").textContent=pods;$("suit").textContent=P.suit?"ACTIVE":pods>=3?"Ready":"Locked";$("power").disabled=pods<3;
- if((S.xp||0)!==hudPrev.xp)bumpHud("xpPill");if((S.paws||0)!==hudPrev.paws)bumpHud("pawsPill");if(pods!==hudPrev.data)bumpHud("dataPill");
+ var dots=$("dataPill").querySelectorAll("i");dots.forEach(function(d,i){d.classList.toggle("on",i<pods)});
+ if(pods!==hudPrev.data)bumpHud("dataPill");
  hudPrev={xp:S.xp||0,paws:S.paws||0,data:pods}
 }
 function mission(n){step=n;var A=[["Mission 1 • Investigate the signal","Walk right from the WildLab and find the field scanner.","Objective: reach the field scanner.",8],["Mission 2 • Explore the habitat","Scan the frog, toucan, and adult sloth.","Objective: collect 3 Creature Data Pods.",35],["Mission 3 • Unlock Sloth Ability","Tap SUIT and continue toward the canopy vines.","Objective: activate the Sloth Ability Suit.",62],["Mission 4 • Canopy rescue","Use the suit to pass the vines and reach the baby sloth.","Objective: find and rescue the baby sloth.",82],["Mission Complete!","The baby sloth is safe!","Rescue complete — great field work!",100]][n];$("mt").textContent=A[0];$("ms").textContent=A[1];$("obj").textContent=A[2];$("prog").style.width=A[3]+"%"}
@@ -737,7 +829,7 @@ function objs(){
  })
 }
 function player(){var x=P.x,y=P.y;X.fillStyle="#0004";X.beginPath();X.ellipse(x+24,y+76,30,8,0,0,Math.PI*2);X.fill();if(glow>0||P.suit){var pulse=61+Math.sin(performance.now()/90)*8;X.strokeStyle=P.suit?"#fff08bd9":"#ffe27a88";X.lineWidth=4;X.beginPath();X.arc(x+23,y+38,pulse,0,Math.PI*2);X.stroke();X.strokeStyle="#77ffc684";X.lineWidth=2;X.beginPath();X.arc(x+23,y+38,pulse+15,0,Math.PI*2);X.stroke()}FX.forEach(function(f){var a=1-f.t/f.life;X.fillStyle="rgba(255,235,122,"+Math.max(0,a)+")";X.beginPath();X.arc(f.x,f.y,f.r*a+.7,0,Math.PI*2);X.fill()})}
-function draw(){X.clearRect(0,0,W,H);sky();X.save();X.translate(-cam,0);world();objs();player();FLOATS.forEach(function(f){var a=Math.max(0,1-f.t/f.life);X.save();X.globalAlpha=a;X.font="1000 28px system-ui";X.textAlign="center";X.lineWidth=6;X.strokeStyle="#0009";X.strokeText(f.text,f.x,f.y);X.fillStyle=f.kind==="saved"?"#9affc2":"#fff08b";X.fillText(f.text,f.x,f.y);X.restore()});X.restore();updateCSSActors();var o=near();if(o&&!$("overlay").classList.contains("show")){X.fillStyle="#04171ddd";rr(W/2-155,H-82,310,46,16);X.fill();X.strokeStyle="#ffffff1d";X.lineWidth=1;X.stroke();X.fillStyle="#fff";X.font="bold 17px system-ui";X.textAlign="center";X.fillText("✋ INTERACT • "+o.name,W/2,H-52);X.textAlign="left"}}
+function draw(){X.clearRect(0,0,W,H);sky();X.save();X.translate(-cam,0);world();objs();player();FLOATS.forEach(function(f){var a=Math.max(0,1-f.t/f.life);X.save();X.globalAlpha=a;X.font="1000 28px system-ui";X.textAlign="center";X.lineWidth=6;X.strokeStyle="#0009";X.strokeText(f.text,f.x,f.y);X.fillStyle=f.kind==="saved"?"#9affc2":"#fff08b";X.fillText(f.text,f.x,f.y);X.restore()});var o=near();if(o&&!$("overlay").classList.contains("show")){var px=o.x,py=o.id==="baby"?300:G-155;X.fillStyle="rgba(57,255,20,.18)";X.beginPath();X.arc(px,py,34+Math.sin(performance.now()/180)*5,0,Math.PI*2);X.fill();X.strokeStyle="#eaffef";X.lineWidth=4;X.beginPath();X.moveTo(px,py-30);X.lineTo(px-12,py-48);X.lineTo(px+12,py-48);X.closePath();X.fillStyle="#39FF14";X.fill();X.stroke()}X.restore();updateCSSActors()}
 function loop(t){var dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();requestAnimationFrame(loop)}
 function hold(id,k){var b=$(id),dn=function(e){e.preventDefault();K[k]=true},up=function(e){e.preventDefault();K[k]=false};b.addEventListener("pointerdown",dn);b.addEventListener("pointerup",up);b.addEventListener("pointercancel",up)}
 hold("left","l");hold("right","r");$("jump").onpointerdown=function(e){e.preventDefault();jump()};$("interact").onclick=interact;$("power").onclick=power;
