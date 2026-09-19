@@ -267,12 +267,90 @@ canvas{
 @media(prefers-reduced-motion:reduce){
   .playerAvatar,.creatureCard,.game.shake,#powerFlash.fire,#screenFlash.fire,.floatText,.hud .pill.bump{animation:none!important}
 }
+
+/* ===== v5.3 screenshot-inspired platformer pass ===== */
+.game{
+  min-height:clamp(430px,68svh,820px);
+  background:linear-gradient(180deg,#73d4e4 0%,#76c8c6 38%,#4c8e59 100%);
+}
+canvas{
+  min-height:clamp(430px,68svh,820px);
+  background:transparent;
+}
+
+/* gameplay foreground should feel like a cartoon platform game, not cards */
+.creatureCard{
+  width:96px;min-height:0;padding:0;border:0;background:transparent;box-shadow:none;
+  animation:creatureIdle 1.8s ease-in-out infinite;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.creatureCard .speciesBadge,.creatureCard .creatureName{display:none}
+.creatureArt{height:72px;margin:0;filter:drop-shadow(0 7px 3px rgba(0,0,0,.32))}
+.creatureArt svg{width:78px;height:72px}
+.powerDisc{width:30px;height:30px;margin:-3px auto 0;background:conic-gradient(#45ffd0,#4ed0ff,#ffe458,#45ffd0);
+  border:3px solid #111;box-shadow:0 0 0 3px rgba(255,255,255,.82),0 0 18px #57f7cb}
+.creatureAnchor.scanned .creatureCard{opacity:.35}
+
+/* sparse top HUD like a side-scroller */
+.hud{
+  top:12px;left:14px;right:auto;
+  display:flex;align-items:center;gap:9px;max-width:none;
+  background:transparent;border:0;box-shadow:none;padding:0;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.hud .pill,.hud .btn{
+  min-width:58px;height:58px;border-radius:50%;padding:0 8px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,#0b947d,#056858);color:#fff;border:3px solid #e6fff7;
+  box-shadow:0 0 0 3px rgba(0,43,55,.45),0 5px 0 rgba(0,0,0,.18);
+  text-shadow:2px 2px 0 rgba(0,0,0,.25)
+}
+.hud .pill::before{display:none!important}
+#xpPill{min-width:82px;border-radius:32px}
+#dataPill{min-width:72px;border-radius:32px}
+#pawsPill{min-width:66px;border-radius:32px}
+#parentBtn{width:58px;font-size:0}
+#parentBtn::after{content:"⚙";font-size:24px}
+#livesPill{display:none}
+
+/* top center mission capsule */
+.mission{
+  top:12px;left:50%;right:auto;transform:translateX(-50%);padding-right:0;
+  width:min(410px,44%);display:block;
+}
+.mission>div{
+  background:linear-gradient(180deg,#17a184,#08745f);
+  border:3px solid #e9fff9;box-shadow:0 0 0 3px rgba(0,41,55,.44),0 5px 0 rgba(0,0,0,.14);
+  border-radius:30px;padding:9px 18px;text-align:center
+}
+.mission>div:last-child{display:none}
+#missionBox{max-width:none}
+#missionBox b{color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.45px}
+#missionBox span{font-size:11px;color:#effff8}
+
+/* low-profile objective card below play field */
+.panel:first-of-type{
+  border-radius:0 0 18px 18px;margin-top:-2px;border-top:0;
+  background:linear-gradient(180deg,#0b6b58,#064f45);color:#fff;
+  box-shadow:0 7px 0 rgba(0,0,0,.15)
+}
+.progress{border-color:#062d2d;background:#0c3f3d}
+.progress span{background:linear-gradient(90deg,#55ffd0,#e7ff5d)}
+
+/* mobile controls stay responsive but less webpage-like */
+@media (hover:none),(pointer:coarse){
+  .dpad{opacity:.86;transform:scale(.9);transform-origin:bottom left}
+  .mobileAction{opacity:.9;transform:scale(.9);transform-origin:bottom right}
+}
+@media(max-width:700px){
+  .hud{transform:scale(.72);transform-origin:top left}
+  .mission{width:46%;transform:translateX(-50%) scale(.88);transform-origin:top center}
+}
+
 </style>
 </head>
 <body>
 <div id="app">
 <div class="top">
- <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">CREATURE TECH CARTOON v5.2</span></div>
+ <div class="brand">🧭🦥 Creature Quest Academy <span class="ver">JUNGLE PLATFORMER v5.3</span></div>
 </div>
 <div id="game" class="game active">
  <canvas id="c" width="1280" height="720"></canvas>
@@ -453,12 +531,79 @@ function update(dt){if($("overlay").classList.contains("show"))return;P.vx=(K.r?
  FLOATS.forEach(function(f){f.t+=dt;f.y-=42*dt});FLOATS=FLOATS.filter(function(f){return f.t<f.life})
 }
 function rr(x,y,w,h,r){X.beginPath();if(X.roundRect)X.roundRect(x,y,w,h,r);else X.rect(x,y,w,h)}
-function sky(){var g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,"#163f55");g.addColorStop(.34,"#26705e");g.addColorStop(.72,"#246a42");g.addColorStop(1,"#16472f");X.fillStyle=g;X.fillRect(0,0,W,H);
- var sun=X.createRadialGradient(W*.76,92,10,W*.76,92,185);sun.addColorStop(0,"#ffeaa84d");sun.addColorStop(1,"#ffeaa800");X.fillStyle=sun;X.fillRect(0,0,W,H);
- X.fillStyle="#c7ffd90f";for(var k=0;k<26;k++){var px=(k*157-(cam*.12))%(W+170);if(px<0)px+=W+170;var py=110+(k*83)%360;X.beginPath();X.arc(px,py,2+(k%3),0,Math.PI*2);X.fill()}
- X.fillStyle="#144f3a88";for(var x=-80;x<W+160;x+=95){var h=140+((x+cam*.2)%150);X.fillRect(x,H-h-100,22,h);X.beginPath();X.arc(x+10,H-h-100,65,0,Math.PI*2);X.fill()}}
-function world(){X.fillStyle="#123c28";X.fillRect(0,G,L,140);X.fillStyle="#2b754a";X.fillRect(0,G,L,17);[[560,390],[1490,320],[2030,300],[2650,330],[3090,350]].forEach(function(a,i){X.fillStyle="#6a452b";X.fillRect(a[0],a[1],40,G-a[1]);X.fillStyle=i%2?"#217048":"#2a8451";for(var j=0;j<5;j++){X.beginPath();X.arc(a[0]+20+(j-2)*26,a[1]+10+(j%2)*20,62,0,Math.PI*2);X.fill()}});X.fillStyle="#2b8ca1";X.fillRect(1040,G-8,260,50);X.fillStyle="#8adff0";X.fillRect(2850,260,95,G-260);PL.slice(1).forEach(function(p){X.fillStyle="#6c4d2e";rr(p.x,p.y,p.w,p.h,9);X.fill();X.fillStyle="#4e9a55";X.fillRect(p.x,p.y,p.w,7)});X.fillStyle="#dce9e7";rr(70,G-165,230,130,22);X.fill();X.fillStyle="#203c48";rr(105,G-140,115,72,12);X.fill();X.fillStyle="#f8d66b";X.font="bold 22px system-ui";X.fillText("WILDLAB",105,G-92)}
-function objs(){O.forEach(function(o){if(o.done&&o.id!=="gate"&&o.id!=="baby")return;var y=o.id==="gate"?340:o.id==="baby"?365:G-105;if(o.t==="scan"){X.fillStyle="#244e5b";rr(o.x-30,G-100,60,76,12);X.fill();X.fillStyle="#6cf2bd";X.fillRect(o.x-16,G-84,32,22)}else if(o.t==="gate"){if(!o.done){X.strokeStyle="#55a64c";X.lineWidth=16;for(var i=0;i<5;i++){X.beginPath();X.moveTo(o.x-55+i*28,260);X.bezierCurveTo(o.x-30+i*28,360,o.x+20+i*20,420,o.x-25+i*30,G);X.stroke()}}}if(!o.done){X.strokeStyle="#ffe07066";X.lineWidth=2;X.beginPath();X.arc(o.x,y-5,45+Math.sin(performance.now()/240)*7,0,Math.PI*2);X.stroke()}})}
+function sky(){
+ var g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,"#72D6E5");g.addColorStop(.48,"#6FC6C6");g.addColorStop(1,"#5DA36A");X.fillStyle=g;X.fillRect(0,0,W,H);
+ // distant canopy
+ X.save();X.translate(-(cam*.08)%180,0);
+ X.fillStyle="#73A85F";for(var x=-180;x<W+360;x+=85){var y=250+(x%170)*.08;X.beginPath();X.arc(x,y,64,0,Math.PI*2);X.arc(x+44,y+18,52,0,Math.PI*2);X.arc(x-38,y+24,45,0,Math.PI*2);X.fill()}
+ X.restore();
+ // deep vertical jungle trunks
+ X.save();X.translate(-(cam*.18)%220,0);for(var t=-220;t<W+440;t+=120){
+   X.fillStyle=t%240===0?"#315B3B":"#426D45";X.fillRect(t,300,28,H-300);
+   X.fillStyle="#2D5839";X.beginPath();X.moveTo(t+14,300);X.lineTo(t-45,235);X.lineTo(t-30,222);X.lineTo(t+14,280);X.fill();
+ }
+ X.restore();
+ // mid foliage
+ X.save();X.translate(-(cam*.28)%240,0);X.fillStyle="#3E7A44";
+ for(var m=-240;m<W+480;m+=95){X.beginPath();X.arc(m,400,72,0,Math.PI*2);X.arc(m+50,380,56,0,Math.PI*2);X.fill()}
+ X.restore();
+}
+function world(){
+ // lower ground with rich dirt
+ X.fillStyle="#6C4B32";X.fillRect(0,G,L,150);
+ X.fillStyle="#8A5F3C";X.fillRect(0,G+22,L,128);
+ // grass cap
+ X.fillStyle="#57B844";X.fillRect(0,G-8,L,30);
+ X.fillStyle="#8FDB51";X.fillRect(0,G-8,L,8);
+
+ // giant tree trunks for depth
+ [[520,220,105],[1510,175,125],[2520,205,115],[3140,190,120]].forEach(function(a,i){
+   var x=a[0],y=a[1],w=a[2];X.fillStyle=i%2?"#7B4D2D":"#855633";rr(x,y,w,G-y+32,30);X.fill();
+   X.fillStyle="rgba(255,180,102,.16)";rr(x+18,y+8,18,G-y-20,12);X.fill();
+   X.fillStyle="#3E7B3E";for(var c=0;c<5;c++){X.beginPath();X.arc(x+w/2+(c-2)*38,y+18+(c%2)*24,64,0,Math.PI*2);X.fill()}
+ });
+
+ // platforms as chunky dirt islands with grass tops
+ PL.slice(1).forEach(function(p){
+   X.fillStyle="rgba(0,0,0,.18)";X.beginPath();X.ellipse(p.x+p.w/2,p.y+24,p.w*.48,13,0,0,Math.PI*2);X.fill();
+   X.fillStyle="#775035";rr(p.x,p.y,p.w,78,12);X.fill();
+   X.fillStyle="#8D6040";X.fillRect(p.x+8,p.y+16,p.w-16,58);
+   X.fillStyle="#54B73F";rr(p.x-6,p.y-8,p.w+12,22,10);X.fill();
+   X.fillStyle="#8FDC4A";X.fillRect(p.x,p.y-8,p.w,7);
+   // dangling roots
+   X.strokeStyle="#68442F";X.lineWidth=5;for(var r=18;r<p.w-12;r+=36){X.beginPath();X.moveTo(p.x+r,p.y+72);X.bezierCurveTo(p.x+r+4,p.y+92,p.x+r-8,p.y+105,p.x+r+3,p.y+118);X.stroke()}
+ });
+
+ // river opening
+ X.fillStyle="#3292A8";X.fillRect(1040,G-5,260,55);X.fillStyle="#6AD9E8";X.fillRect(1040,G-5,260,7);
+
+ // waterfall / far right
+ var wg=X.createLinearGradient(0,260,0,G);wg.addColorStop(0,"#B8F4FB");wg.addColorStop(.4,"#69D6E5");wg.addColorStop(1,"#36A5B8");X.fillStyle=wg;X.fillRect(2850,260,95,G-260);
+
+ // WildLab base
+ X.fillStyle="#E9F4F0";rr(65,G-176,245,140,24);X.fill();X.strokeStyle="#111";X.lineWidth=5;X.stroke();
+ X.fillStyle="#154C65";rr(100,G-151,126,76,13);X.fill();X.stroke();
+ X.fillStyle="#FFE052";X.font="900 22px system-ui";X.fillText("WILDLAB",107,G-103);
+}
+function objs(){
+ O.forEach(function(o){
+   if(o.done&&o.id!=="gate"&&o.id!=="baby")return;
+   var y=o.id==="gate"?340:o.id==="baby"?365:G-105;
+   if(o.t==="scan"){
+     X.fillStyle="rgba(0,0,0,.18)";X.beginPath();X.ellipse(o.x,G-20,38,9,0,0,Math.PI*2);X.fill();
+     X.fillStyle="#0C4162";rr(o.x-32,G-106,64,82,13);X.fill();X.strokeStyle="#111";X.lineWidth=5;X.stroke();
+     X.fillStyle="#39FF14";rr(o.x-18,G-88,36,26,7);X.fill();X.stroke();
+     X.strokeStyle="#5CDFFF";X.lineWidth=3;X.beginPath();X.moveTo(o.x,G-106);X.lineTo(o.x,G-128);X.stroke();X.beginPath();X.arc(o.x,G-134,7,0,Math.PI*2);X.stroke()
+   }else if(o.t==="gate"&&!o.done){
+     // thorn/vine wall
+     X.strokeStyle="#315E2C";X.lineWidth=18;
+     for(var i=0;i<6;i++){X.beginPath();X.moveTo(o.x-70+i*28,260);X.bezierCurveTo(o.x-36+i*22,350,o.x+15+i*18,455,o.x-45+i*30,G);X.stroke()}
+     X.strokeStyle="#A5C95A";X.lineWidth=4;
+     for(var s=0;s<20;s++){var yy=290+(s%7)*42,xx=o.x-65+(s%6)*26;X.beginPath();X.moveTo(xx,yy);X.lineTo(xx-12,yy-9);X.moveTo(xx,yy);X.lineTo(xx+12,yy-10);X.stroke()}
+   }
+   if(!o.done){X.strokeStyle="rgba(255,242,104,.55)";X.lineWidth=3;X.beginPath();X.arc(o.x,y-5,45+Math.sin(performance.now()/240)*7,0,Math.PI*2);X.stroke()}
+ })
+}
 function player(){var x=P.x,y=P.y;X.fillStyle="#0004";X.beginPath();X.ellipse(x+24,y+76,30,8,0,0,Math.PI*2);X.fill();if(glow>0||P.suit){var pulse=61+Math.sin(performance.now()/90)*8;X.strokeStyle=P.suit?"#fff08bd9":"#ffe27a88";X.lineWidth=4;X.beginPath();X.arc(x+23,y+38,pulse,0,Math.PI*2);X.stroke();X.strokeStyle="#77ffc684";X.lineWidth=2;X.beginPath();X.arc(x+23,y+38,pulse+15,0,Math.PI*2);X.stroke()}FX.forEach(function(f){var a=1-f.t/f.life;X.fillStyle="rgba(255,235,122,"+Math.max(0,a)+")";X.beginPath();X.arc(f.x,f.y,f.r*a+.7,0,Math.PI*2);X.fill()})}
 function draw(){X.clearRect(0,0,W,H);sky();X.save();X.translate(-cam,0);world();objs();player();FLOATS.forEach(function(f){var a=Math.max(0,1-f.t/f.life);X.save();X.globalAlpha=a;X.font="1000 28px system-ui";X.textAlign="center";X.lineWidth=6;X.strokeStyle="#0009";X.strokeText(f.text,f.x,f.y);X.fillStyle=f.kind==="saved"?"#9affc2":"#fff08b";X.fillText(f.text,f.x,f.y);X.restore()});X.restore();updateCSSActors();var o=near();if(o&&!$("overlay").classList.contains("show")){X.fillStyle="#04171ddd";rr(W/2-155,H-82,310,46,16);X.fill();X.strokeStyle="#ffffff1d";X.lineWidth=1;X.stroke();X.fillStyle="#fff";X.font="bold 17px system-ui";X.textAlign="center";X.fillText("✋ INTERACT • "+o.name,W/2,H-52);X.textAlign="left"}}
 function loop(t){var dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();requestAnimationFrame(loop)}
