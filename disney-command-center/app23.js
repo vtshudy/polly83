@@ -1,4 +1,4 @@
-/* DCC v43 — visual/tab sync for the September 8 itinerary update */
+/* DCC v44 — visual/tab sync for the September 30 itinerary update */
 (()=>{
  if(typeof dccV34Img==='undefined')return;
  dccV34DayImage=function(day){
@@ -7,13 +7,13 @@
   if(day==='2026-11-29')return dccV34Img.saratoga;
   if(day==='2026-11-30')return dccV34Img.ak;
   if(day==='2026-12-01'||day==='2026-12-04')return dccV34Img.castle;
-  if(day==='2026-12-02')return dccV34Img.skyliner;
-  if(day==='2026-12-03')return dccV34Img.epcot;
+  if(day==='2026-12-02')return dccV34Img.epcot;
+  if(day==='2026-12-03')return dccV34Img.skyliner;
   return dccV34Img.castle;
  };
  dccV34Travel=function(){
   let h=dccV34Hero('Getting around Disney','Walking, boats, Skyliner, buses and rideshare — the planner compares the fastest practical choice.',dccV34Img.skyliner,'Best route');h+='<div class="dccVisualGrid">';
-  h+=dccV34Card({img:dccV34Img.skyliner,title:'EPCOT → Hollywood Studios',sub:'Dec 2 park hop via Skyliner',badges:['Skyliner',{text:'Dec 2',cls:'purple'}],meta:[['ROUTE','International Gateway → Skyliner → Studios'],['USE WHEN','After EPCOT priorities on Dec 2']],note:'The updated itinerary moved the EPCOT-to-Hollywood Studios hop to Dec 2. The route planner uses your location, the next fixed event and transportation status to choose the best timing.',actions:[{label:'Open Dec 2',day:'2026-12-02',primary:true},{label:'Disney Skyliner',href:'https://disneyworld.disney.go.com/skyliner/'}]});
+  h+=dccV34Card({img:dccV34Img.skyliner,title:'Hollywood Studios → EPCOT',sub:'Dec 3 park hop via Skyliner',badges:['Skyliner',{text:'Dec 3',cls:'purple'}],meta:[['ROUTE','Hollywood Studios → Skyliner → International Gateway'],['USE WHEN','After the Studios show block on Dec 3']],note:'The updated itinerary puts the Skyliner transfer on Dec 3. Leave enough time for the transfer, EPCOT entry and the 4:30 PM Tutto Italia plan.',actions:[{label:'Open Dec 3',day:'2026-12-03',primary:true},{label:'Disney Skyliner',href:'https://disneyworld.disney.go.com/skyliner/'}]});
   h+=dccV34Card({img:dccV34Img.hs,title:'BoardWalk → Hollywood Studios',sub:'Walk or Friendship Boat',badges:['Walk / Boat',{text:'Nov 28',cls:'gold'}],meta:[['WALK','~20 min in the source plan + family buffer'],['BOAT','Best if one is boarding soon']],note:'Compare walking against the next Friendship Boat so you do not waste time waiting when walking is faster.',actions:[{label:'Open Jollywood day',day:'2026-11-28',primary:true},{label:'Map BoardWalk',href:dccV34MapHref("Disney's BoardWalk")}]});
   h+=dccV34Card({img:dccV34Img.saratoga,title:'Saratoga Springs ↔ Disney Springs',sub:'Your main resort transportation hub',badges:['Home base',{text:'Nov 29–Dec 5',cls:'green'}],meta:[['BEST CASE','Walk from Congress Park'],['ALTERNATES','Boat / bus / rideshare']],note:'Saratoga Springs remains your home base, so transportation alerts and return-to-hotel recommendations prioritize routes that affect this resort.',actions:[{label:'Open Nov 29',day:'2026-11-29',primary:true},{label:'Resort Map',href:'https://magicguides.com/wp-content/uploads/2019/01/Saratoga-Springs-Resort-Map.pdf'}]});
   return h+'</div>';
